@@ -1,7 +1,7 @@
 package onemg.analytics.dump.repository;
 
 
-import onemg.analytics.dump.model.model.DynamicData;
+import onemg.analytics.dump.model.DynamicData;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 

@@ -1,6 +1,6 @@
 package onemg.analytics.dump.controller;
 
-import onemg.analytics.dump.model.model.DynamicData;
+import onemg.analytics.dump.model.DynamicData;
 import onemg.analytics.dump.repository.DynamicDataRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
