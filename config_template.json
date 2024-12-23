@@ -1,0 +1,3 @@
+{
+  "spring.data.mongodb.uri": "mongodb://onemg-mongodb-svc.{{ env_name }}.svc.{{ cluster_domain }}/analytics_data_dump"
+}
