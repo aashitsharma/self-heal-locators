@@ -1,5 +1,5 @@
-FROM maven:3.8.6-openjdk-17 AS build
-# Set the working directory in the container
+# Build Stage
+FROM maven:3.8.6-eclipse-temurin-17 AS build
 WORKDIR /app
 
 # Copy the pom.xml and download dependencies
@@ -10,9 +10,12 @@ RUN mvn dependency:go-offline -B
 COPY src ./src
 RUN mvn clean package -DskipTests
 
-FROM openjdk:17-oracle
+# Runtime Stage
+FROM eclipse-temurin:17-jre
 MAINTAINER AASHIT
 VOLUME /tmp
 
-COPY target/*.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+# Copy the JAR file from the build stage
+COPY --from=build /app/target/*.jar app.jar
+
+ENTRYPOINT ["java", "-jar", "/app.jar"]
