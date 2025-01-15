@@ -4,31 +4,44 @@ FROM ubuntu:22.04 AS base
 # Set environment variables for non-interactive installation
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install Java and Maven
-RUN apt-get update && apt-get install -y \
-    openjdk-17-jdk \
-    wget \
-    tar \
-    curl \
-    git \
-    && apt-get clean
+# Update dpkg repositories and install essential tools
+RUN apt-get update && \
+    apt-get install -y curl rsync wget ssh git xvfb unzip gnupg ca-certificates-java
+
+# Install OpenJDK-17
+RUN apt-get update && \
+    apt-get install -y openjdk-17-jdk ant && \
+    apt-get clean;
+
+# Fix certificate issues
+RUN apt-get update && \
+    apt-get install -y ca-certificates-java && \
+    apt-get clean && \
+    update-ca-certificates -f;
+
+# Setup JAVA_HOME -- useful for docker commandline
+ENV JAVA_HOME /usr/lib/jvm/java-1.17.0-openjdk-amd64/
+RUN export JAVA_HOME
+
+# Set environment variables for Maven
+ENV MAVEN_VERSION=3.9.4
+ENV MAVEN_HOME=/opt/maven
+ENV PATH=${MAVEN_HOME}/bin:${PATH}
 
 # Install Maven
-RUN wget https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz -P /tmp \
-    && tar -xvzf /tmp/apache-maven-3.8.6-bin.tar.gz -C /opt \
-    && ln -s /opt/apache-maven-3.8.6/bin/mvn /usr/bin/mvn \
-    && rm /tmp/apache-maven-3.8.6-bin.tar.gz
+RUN mkdir -p /opt && \
+    wget -q -O - http://archive.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz | tar -xzf - -C /opt && \
+    ln -s /opt/apache-maven-${MAVEN_VERSION} ${MAVEN_HOME}
 
-# Set environment variables for Java and Maven
-ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-ENV MAVEN_HOME=/opt/apache-maven-3.8.6
-ENV PATH="${JAVA_HOME}/bin:${MAVEN_HOME}/bin:${PATH}"
+# Verify Maven installation
+RUN mvn --version
 
-# Verify Java and Maven installation
-RUN java -version && mvn -version
+# Setup MAVEN Properties
+ENV MAVEN_CONFIG /root/.m2
+RUN export M2_HOME=/opt/maven
 
 # Build Stage: Use Maven for building your app
-FROM maven:3.8.6-eclipse-temurin-17 AS build
+FROM base AS build
 WORKDIR /app
 
 # Copy only necessary files for Maven build
@@ -40,15 +53,15 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Runtime Stage: Use Java and Maven installed in the base image
-FROM ubuntu:22.04
+FROM base
 
 # Copy the JDK and Maven installation from the base stage
-COPY --from=base /usr/lib/jvm/java-17-openjdk-amd64 /usr/lib/jvm/java-17-openjdk-amd64
-COPY --from=base /opt/apache-maven-3.8.6 /opt/apache-maven-3.8.6
+COPY --from=build /usr/lib/jvm/java-1.17.0-openjdk-amd64 /usr/lib/jvm/java-1.17.0-openjdk-amd64
+COPY --from=build /opt/maven /opt/maven
 
 # Set environment variables for Java and Maven
-ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-ENV MAVEN_HOME=/opt/apache-maven-3.8.6
+ENV JAVA_HOME=/usr/lib/jvm/java-1.17.0-openjdk-amd64
+ENV MAVEN_HOME=/opt/maven
 ENV PATH="${JAVA_HOME}/bin:${MAVEN_HOME}/bin:${PATH}"
 
 WORKDIR /home/ubuntu/1mg/analytics_event_dump
