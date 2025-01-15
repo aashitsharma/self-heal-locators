@@ -29,3 +29,6 @@ EXPOSE 8080
 
 # Set the entry point to start the Spring Boot app
 ENTRYPOINT ["java", "-jar", "app.jar"]
+
+# Copy code folder
+COPY . .
