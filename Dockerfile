@@ -50,7 +50,7 @@ RUN mvn dependency:go-offline -B
 
 # Copy the source code and build the application
 COPY src ./src
-RUN mvn clean package -DskipTests
+RUN mvn clean package spring-boot:repackage -DskipTests
 
 # Runtime Stage: Use Java and Maven installed in the base image
 FROM base
@@ -81,3 +81,5 @@ EXPOSE 8080
 
 # Set the entry point to start the Spring Boot app
 ENTRYPOINT ["java", "-jar", "app.jar"]
+
+COPY . .
