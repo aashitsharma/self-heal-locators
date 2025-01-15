@@ -1,5 +1,5 @@
 # Base Image (for installing Java and Maven)
-FROM buntu:22.04 AS base
+FROM ubuntu:22.04 AS base
 
 # Set environment variables for non-interactive installation
 ENV DEBIAN_FRONTEND=noninteractive
@@ -40,7 +40,7 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Runtime Stage: Use Java and Maven installed in the base image
-FROM buntu:22.04
+FROM ubuntu:22.04
 
 # Copy the JDK and Maven installation from the base stage
 COPY --from=base /usr/lib/jvm/java-17-openjdk-amd64 /usr/lib/jvm/java-17-openjdk-amd64
