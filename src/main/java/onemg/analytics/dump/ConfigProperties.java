@@ -1,8 +1,14 @@
 package onemg.analytics.dump;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+
+
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ConfigProperties {
-    private String SPRING_DATA_MONGODB_URI;
+    @JsonProperty("spring.data.mongodb.uri")
+    private String springDataMongodbUri;
 }

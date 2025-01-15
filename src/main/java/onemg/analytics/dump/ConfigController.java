@@ -16,7 +16,7 @@ public class ConfigController {
         Properties pr = new Properties();
         try{
             pr.load(ConfigController.class.getClassLoader().getResourceAsStream("src/main/resources/application.properties"));
-            pr.setProperty("spring.data.mongodb.uri",configProperties.getSPRING_DATA_MONGODB_URI());
+            pr.setProperty("spring.data.mongodb.uri",configProperties.getSpringDataMongodbUri());
         }
         catch (Exception e){
             e.printStackTrace();
