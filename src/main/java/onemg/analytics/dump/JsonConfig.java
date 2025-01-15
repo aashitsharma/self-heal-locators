@@ -13,6 +13,13 @@ public class JsonConfig {
     @Bean
     public ConfigProperties configProperties() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(new File("config.json"), ConfigProperties.class);
+
+        // Path to the root-level config.json file
+        File file = new File("config.json");
+        if (!file.exists()) {
+            throw new IOException("config.json not found at root level: " + file.getAbsolutePath());
+        }
+
+        return objectMapper.readValue(file, ConfigProperties.class);
     }
 }
