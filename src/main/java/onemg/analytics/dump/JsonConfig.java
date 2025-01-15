@@ -27,7 +27,7 @@ public class JsonConfig {
         ConfigProperties config = objectMapper.readValue(file, ConfigProperties.class);
         LOGGER.info("Loaded ConfigProperties: "+ config);
 
-        Properties pr = new Properties();
+       /* Properties pr = new Properties();
         try{
             File reader = new File("src/main/resources/application.properties");
             if (reader.exists()) {
@@ -44,7 +44,7 @@ public class JsonConfig {
         }
         catch (Exception e){
             e.printStackTrace();
-        }
+        }*/
 
         return config;
     }
