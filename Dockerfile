@@ -2,26 +2,30 @@
 FROM maven:3.8.6-eclipse-temurin-17 AS build
 WORKDIR /app
 
-# Copy only necessary files to take advantage of Docker caching
+# Copy only necessary files for Maven build
 COPY pom.xml .
 RUN mvn dependency:go-offline -B
 
-# Copy the source code and build the JAR
+# Copy the source code and build the application
 COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Runtime Stage
 FROM eclipse-temurin:17-jre
-WORKDIR /app
+WORKDIR /home/ubuntu/1mg/analytics_event_dump
+
+# Create logs directory (if required)
+RUN mkdir -p logs
 
 # Add metadata
 LABEL maintainer="AASHIT"
+LABEL app="analytics_event_dump"
 
-# Copy the JAR file from the build stage
+# Copy the built JAR file from the build stage
 COPY --from=build /app/target/*.jar app.jar
 
 # Expose the application's default port (Spring Boot defaults to 8080)
 EXPOSE 8080
 
 # Set the entry point to start the Spring Boot app
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
