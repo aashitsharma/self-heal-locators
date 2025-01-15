@@ -15,7 +15,7 @@ public class ConfigController {
     private static final Logger LOGGER = Logger.getLogger(ConfigController.class);
 
     @Autowired
-    private ConfigProperties configProperties;
+    private ConfigProperties configProperties = new ConfigProperties();
 
     @GetMapping("/config")
     public ConfigProperties getConfig() {
