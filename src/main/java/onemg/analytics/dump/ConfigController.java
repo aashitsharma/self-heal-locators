@@ -24,10 +24,13 @@ public class ConfigController {
             File reader = new File("src/main/resources/application.properties");
             if (reader.exists()) {
                 pr.load(new FileReader(reader));
+                LOGGER.info("FILE LOADED FROM SOURCE ");
             }
             if (!reader.exists()) {
                 pr.load(ConfigController.class.getResourceAsStream("/application.properties"));
+                LOGGER.info("FILE LOADED FROM ROOT ");
             }
+            LOGGER.info("Mongo URI is : "+configProperties.getSpringDataMongodbUri());
             pr.setProperty("spring.data.mongodb.uri",configProperties.getSpringDataMongodbUri());
             LOGGER.info("Fetching Property Details : "+pr.getProperty("spring.data.mongodb.uri"));
         }
