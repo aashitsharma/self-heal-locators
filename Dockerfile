@@ -27,6 +27,7 @@ RUN JAVA_PATH=$(dirname $(dirname $(readlink -f $(which java)))) && \
     echo "export JAVA_HOME=${JAVA_PATH}" >> /etc/profile
 
 # Add JAVA_HOME to PATH
+RUN echo $JAVA_PATH
 ENV PATH="$JAVA_HOME/bin:$PATH"
 
 # Set environment variables for Maven
@@ -64,11 +65,11 @@ FROM base
 WORKDIR /home/ubuntu/1mg/analytics_event_dump
 
 # Copy the JDK and Maven installation from the base stage
-COPY --from=build /usr/lib/jvm/java-17-openjdk-* /usr/lib/jvm/java-17-openjdk-*
+COPY --from=build $JAVA_PATH $JAVA_PATH
 COPY --from=build /opt/maven /opt/maven
 
 # Set environment variables for Java and Maven
-ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-*
+ENV JAVA_HOME=$JAVA_PATH
 ENV MAVEN_HOME=/opt/maven
 ENV PATH="${JAVA_HOME}/bin:${MAVEN_HOME}/bin:${PATH}"
 
