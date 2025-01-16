@@ -19,14 +19,15 @@ RUN apt-get update && \
     apt-get clean && \
     update-ca-certificates -f;
 
-# Setup JAVA_HOME -- useful for docker commandline
-ENV JAVA_HOME /usr/lib/jvm/java-1.17.0-openjdk-amd64/
-RUN export JAVA_HOME
+# Setup JAVA_HOME -- useful for Docker commandline
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+RUN export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+ENV PATH="${JAVA_HOME}/bin:${PATH}"
 
 # Set environment variables for Maven
 ENV MAVEN_VERSION=3.9.4
 ENV MAVEN_HOME=/opt/maven
-ENV PATH=${MAVEN_HOME}/bin:${PATH}
+ENV PATH="${MAVEN_HOME}/bin:${PATH}"
 
 # Install Maven
 RUN mkdir -p /opt && \
@@ -37,8 +38,7 @@ RUN mkdir -p /opt && \
 RUN mvn --version
 
 # Setup MAVEN Properties
-ENV MAVEN_CONFIG /root/.m2
-RUN export M2_HOME=/opt/maven
+ENV MAVEN_CONFIG=/root/.m2
 
 # Build Stage: Use Maven for building your app
 FROM base AS build
@@ -59,11 +59,11 @@ FROM base
 WORKDIR /home/ubuntu/1mg/analytics_event_dump
 
 # Copy the JDK and Maven installation from the base stage
-COPY --from=build /usr/lib/jvm/java-1.17.0-openjdk-amd64 /usr/lib/jvm/java-1.17.0-openjdk-amd64
+COPY --from=build /usr/lib/jvm/java-17-openjdk-amd64 /usr/lib/jvm/java-17-openjdk-amd64
 COPY --from=build /opt/maven /opt/maven
 
 # Set environment variables for Java and Maven
-ENV JAVA_HOME=/usr/lib/jvm/java-1.17.0-openjdk-amd64
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 ENV MAVEN_HOME=/opt/maven
 ENV PATH="${JAVA_HOME}/bin:${MAVEN_HOME}/bin:${PATH}"
 
