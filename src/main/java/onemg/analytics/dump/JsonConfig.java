@@ -45,7 +45,7 @@ public class JsonConfig {
         catch (Exception e){
             e.printStackTrace();
         }*/
-
+        System.setProperty("spring.data.mongodb.uri",config.getSpringDataMongodbUri());
         return config;
     }
 }
