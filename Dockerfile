@@ -1,5 +1,5 @@
 # Base Image (for installing Java and Maven)
-FROM ubuntu:22.04 AS base
+FROM arm64v8/ubuntu:25.04 AS base
 
 # Set environment variables for non-interactive installation
 ENV DEBIAN_FRONTEND=noninteractive
