@@ -55,6 +55,9 @@ RUN mvn clean package spring-boot:repackage -DskipTests
 # Runtime Stage: Use Java and Maven installed in the base image
 FROM base
 
+# Set working directory for the application
+WORKDIR /home/ubuntu/1mg/analytics_event_dump
+
 # Copy the JDK and Maven installation from the base stage
 COPY --from=build /usr/lib/jvm/java-1.17.0-openjdk-amd64 /usr/lib/jvm/java-1.17.0-openjdk-amd64
 COPY --from=build /opt/maven /opt/maven
@@ -63,8 +66,6 @@ COPY --from=build /opt/maven /opt/maven
 ENV JAVA_HOME=/usr/lib/jvm/java-1.17.0-openjdk-amd64
 ENV MAVEN_HOME=/opt/maven
 ENV PATH="${JAVA_HOME}/bin:${MAVEN_HOME}/bin:${PATH}"
-
-WORKDIR /home/ubuntu/1mg/analytics_event_dump
 
 # Create logs directory (if required)
 RUN mkdir -p logs
@@ -76,10 +77,11 @@ LABEL app="analytics_event_dump"
 # Copy everything from the build stage to the runtime stage
 COPY --from=build /app/target/*.jar app.jar
 
+# Copy the rest of the project files (if required for configuration)
+COPY . .
+
 # Expose the application's default port (Spring Boot defaults to 8080)
 EXPOSE 8080
 
 # Set the entry point to start the Spring Boot app
-ENTRYPOINT ["java", "-jar", "app.jar"]
-
-COPY . .
+ENTRYPOINT ["java", "-jar", "app.jar", "--debug"]

@@ -26,25 +26,6 @@ public class JsonConfig {
 
         ConfigProperties config = objectMapper.readValue(file, ConfigProperties.class);
         LOGGER.info("Loaded ConfigProperties: "+ config);
-
-       /* Properties pr = new Properties();
-        try{
-            File reader = new File("src/main/resources/application.properties");
-            if (reader.exists()) {
-                pr.load(new FileReader(reader));
-                LOGGER.info("FILE LOADED FROM SOURCE ");
-            }
-            if (!reader.exists()) {
-                pr.load(ConfigController.class.getResourceAsStream("/application.properties"));
-                LOGGER.info("FILE LOADED FROM ROOT ");
-            }
-            LOGGER.info("Mongo URI is : "+config.getSpringDataMongodbUri());
-            pr.setProperty("spring.data.mongodb.uri",config.getSpringDataMongodbUri());
-            LOGGER.info("Fetching Property Details : "+pr.getProperty("spring.data.mongodb.uri"));
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }*/
         System.setProperty("spring.data.mongodb.uri",config.getSpringDataMongodbUri());
         return config;
     }
