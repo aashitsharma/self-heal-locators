@@ -79,7 +79,3 @@ COPY --from=build /app/target/*.jar app.jar
 
 # Copy the rest of the project files (if required for configuration)
 COPY . .
-
-# Expose the application's default port (Spring Boot defaults to 8080)
-EXPOSE 8080
-
