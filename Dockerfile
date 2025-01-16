@@ -83,5 +83,3 @@ COPY . .
 # Expose the application's default port (Spring Boot defaults to 8080)
 EXPOSE 8080
 
-# Set the entry point to start the Spring Boot app
-ENTRYPOINT ["java", "-jar", "app.jar", "--debug"]
