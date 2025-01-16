@@ -21,14 +21,9 @@ RUN apt-get update && \
     apt-get clean;
 
 
-# Dynamically determine JAVA_HOME path
-RUN JAVA_PATH=$(dirname $(dirname $(readlink -f $(which java)))) && \
-    echo "JAVA_HOME=${JAVA_PATH}" >> /etc/environment && \
-    echo "export JAVA_HOME=${JAVA_PATH}" >> /etc/profile
-
-# Add JAVA_HOME to PATH
-RUN echo $JAVA_PATH
-ENV PATH="$JAVA_HOME/bin:$PATH"
+# Setup JAVA_HOME -- useful for docker commandline
+ENV JAVA_HOME /usr/lib/jvm/java-1.17.0-openjdk-amd64/
+RUN export JAVA_HOME
 
 # Set environment variables for Maven
 ENV MAVEN_VERSION=3.9.4
@@ -65,13 +60,14 @@ FROM base
 WORKDIR /home/ubuntu/1mg/analytics_event_dump
 
 # Copy the JDK and Maven installation from the base stage
-COPY --from=build $JAVA_PATH $JAVA_PATH
+COPY --from=build /usr/lib/jvm/java-1.17.0-openjdk-amd64 /usr/lib/jvm/java-1.17.0-openjdk-amd64
 COPY --from=build /opt/maven /opt/maven
 
 # Set environment variables for Java and Maven
-ENV JAVA_HOME=$JAVA_PATH
+ENV JAVA_HOME=/usr/lib/jvm/java-1.17.0-openjdk-amd64
 ENV MAVEN_HOME=/opt/maven
 ENV PATH="${JAVA_HOME}/bin:${MAVEN_HOME}/bin:${PATH}"
+
 
 # Create logs directory (if required)
 RUN mkdir -p logs
