@@ -1,0 +1,3 @@
+{
+  "spring.data.mongodb.uri": "mongodb://analytics:qaautomation1mg@52.66.130.251:5729/analytics_data_dump"
+}

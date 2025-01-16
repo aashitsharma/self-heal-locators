@@ -8,21 +8,22 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get install -y curl rsync wget ssh git xvfb unzip gnupg ca-certificates-java
 
-# Install OpenJDK-17
-RUN apt-get update && \
-    apt-get install -y openjdk-17-jdk ant && \
-    apt-get clean;
-
 # Fix certificate issues
 RUN apt-get update && \
     apt-get install -y ca-certificates-java && \
     apt-get clean && \
     update-ca-certificates -f;
 
-# Setup JAVA_HOME -- useful for Docker commandline
-ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-RUN export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-ENV PATH="${JAVA_HOME}/bin:${PATH}"
+# Step 3: Update the package repository and install required packages
+RUN apt-get update && \
+    apt-get install -y openjdk-17-jdk maven curl && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Step 4: Set JAVA_HOME and Maven environment variables
+RUN java --version
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-arm64
+ENV PATH="$JAVA_HOME/bin:$PATH"
 
 # Set environment variables for Maven
 ENV MAVEN_VERSION=3.9.4
@@ -59,11 +60,11 @@ FROM base
 WORKDIR /home/ubuntu/1mg/analytics_event_dump
 
 # Copy the JDK and Maven installation from the base stage
-COPY --from=build /usr/lib/jvm/java-17-openjdk-amd64 /usr/lib/jvm/java-17-openjdk-amd64
+COPY --from=build /usr/lib/jvm/java-17-openjdk-arm64 /usr/lib/jvm/java-17-openjdk-arm64
 COPY --from=build /opt/maven /opt/maven
 
 # Set environment variables for Java and Maven
-ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-arm64
 ENV MAVEN_HOME=/opt/maven
 ENV PATH="${JAVA_HOME}/bin:${MAVEN_HOME}/bin:${PATH}"
 
