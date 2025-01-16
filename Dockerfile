@@ -1,5 +1,5 @@
 # Base Image (for installing Java and Maven)
-FROM arm64v8/ubuntu:25.04 AS base
+FROM ubuntu:22.04 AS base
 
 # Set environment variables for non-interactive installation
 ENV DEBIAN_FRONTEND=noninteractive
@@ -16,13 +16,17 @@ RUN apt-get update && \
 
 # Step 3: Update the package repository and install required packages
 RUN apt-get update && \
-    apt-get install -y openjdk-17-jdk maven curl && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get install -y openjdk-17-jdk && \
+    apt-get install -y ant && \
+    apt-get clean;
 
-# Step 4: Set JAVA_HOME and Maven environment variables
-RUN java --version
-ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-arm64
+
+# Dynamically determine JAVA_HOME path
+RUN JAVA_PATH=$(dirname $(dirname $(readlink -f $(which java)))) && \
+    echo "JAVA_HOME=${JAVA_PATH}" >> /etc/environment && \
+    echo "export JAVA_HOME=${JAVA_PATH}" >> /etc/profile
+
+# Add JAVA_HOME to PATH
 ENV PATH="$JAVA_HOME/bin:$PATH"
 
 # Set environment variables for Maven
@@ -60,11 +64,11 @@ FROM base
 WORKDIR /home/ubuntu/1mg/analytics_event_dump
 
 # Copy the JDK and Maven installation from the base stage
-COPY --from=build /usr/lib/jvm/java-17-openjdk-arm64 /usr/lib/jvm/java-17-openjdk-arm64
+COPY --from=build /usr/lib/jvm/java-17-openjdk-* /usr/lib/jvm/java-17-openjdk-*
 COPY --from=build /opt/maven /opt/maven
 
 # Set environment variables for Java and Maven
-ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-arm64
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-*
 ENV MAVEN_HOME=/opt/maven
 ENV PATH="${JAVA_HOME}/bin:${MAVEN_HOME}/bin:${PATH}"
 
