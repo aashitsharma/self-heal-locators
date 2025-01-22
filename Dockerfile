@@ -79,5 +79,7 @@ LABEL app="analytics_event_dump"
 # Copy everything from the build stage to the runtime stage
 COPY --from=build /app/target/*.jar app.jar
 
+EXPOSE 8980
+
 # Copy the rest of the project files (if required for configuration)
 COPY . .

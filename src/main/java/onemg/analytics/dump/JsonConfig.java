@@ -27,6 +27,8 @@ public class JsonConfig {
         ConfigProperties config = objectMapper.readValue(file, ConfigProperties.class);
         LOGGER.info("Loaded ConfigProperties: "+ config);
         System.setProperty("spring.data.mongodb.uri",config.getSpringDataMongodbUri());
+        System.setProperty("logging.level.root",config.getLoggingLevel());
+        System.setProperty("logging.level.org.springframework",config.getLoggingSpring());
         return config;
     }
 }

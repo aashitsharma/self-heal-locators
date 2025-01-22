@@ -11,4 +11,8 @@ import lombok.Data;
 public class ConfigProperties {
     @JsonProperty("spring.data.mongodb.uri")
     private String springDataMongodbUri;
+    @JsonProperty("logging.level.root")
+    private String loggingLevel;
+    @JsonProperty("logging.level.org.springframework")
+    private String loggingSpring;
 }
