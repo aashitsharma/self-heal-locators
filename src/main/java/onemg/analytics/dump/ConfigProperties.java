@@ -15,4 +15,6 @@ public class ConfigProperties {
     private String loggingLevel;
     @JsonProperty("logging.level.org.springframework")
     private String loggingSpring;
+    @JsonProperty("server.port")
+    private int serverPort;
 }

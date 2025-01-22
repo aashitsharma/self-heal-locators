@@ -29,6 +29,7 @@ public class JsonConfig {
         System.setProperty("spring.data.mongodb.uri",config.getSpringDataMongodbUri());
         System.setProperty("logging.level.root",config.getLoggingLevel());
         System.setProperty("logging.level.org.springframework",config.getLoggingSpring());
+        System.setProperty("server.port",String.valueOf(config.getServerPort()));
         return config;
     }
 }
