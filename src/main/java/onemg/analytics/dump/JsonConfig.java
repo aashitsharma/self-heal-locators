@@ -22,6 +22,9 @@ public class JsonConfig {
         LOGGER.info("Attempting to load config.json...");
         // Path to the root-level config.json file
         File file = new File("config.json");
+        if (!file.exists()) {
+            file =new File("/config.json");
+        }
         ConfigProperties config = objectMapper.readValue(file, ConfigProperties.class);
         LOGGER.info("Loaded ConfigProperties: "+ config);
         setProperties(config);
@@ -37,6 +40,8 @@ public class JsonConfig {
         System.setProperty("logging.level.root","DEBUG");
         System.setProperty("logging.level.org.springframework","DEBUG");
         System.setProperty("server.port","8980");
+        System.setProperty("management.endpoints.web.exposure.include","*");
+        System.setProperty("management.endpoint.health.show-details","always");
 
         props.put("spring.data.mongodb.uri",config.getSpringDataMongodbUri());
         /*props.put("logging.level.root",config.getLoggingLevel());
@@ -46,5 +51,7 @@ public class JsonConfig {
         props.put("logging.level.root","DEBUG");
         props.put("logging.level.org.springframework","DEBUG");
         props.put("server.port","8980");
+        props.put("management.endpoints.web.exposure.include","*");
+        props.put("management.endpoint.health.show-details","always");
     }
 }

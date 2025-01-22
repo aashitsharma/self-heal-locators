@@ -1,3 +1,4 @@
+
 # Base Image (for installing Java and Maven)
 FROM ubuntu:22.04 AS base
 
