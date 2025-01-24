@@ -20,7 +20,8 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
             throws IOException,ServletException {
         try {
             String uniqueReference = UUID.randomUUID().toString();
-            MDC.put("reference", uniqueReference);
+            MDC.put("reference", "REF-ID-"+uniqueReference);
+            response.addHeader("request_id",uniqueReference);
             filterChain.doFilter(request, response);
         } finally {
             // Clear MDC after the request completes
