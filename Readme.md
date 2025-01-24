@@ -1,5 +1,9 @@
 
+## To Start Analytics Service using mvn
+- mvn clean install
+- mvn spring-boot:run
 
+#Below Commands are for Docker
 
 ## To Start the Analytics Dump Service
  - docker compose up --build
