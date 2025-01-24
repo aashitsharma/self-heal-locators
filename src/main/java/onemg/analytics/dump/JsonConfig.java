@@ -37,8 +37,8 @@ public class JsonConfig {
         System.setProperty("logging.level.org.springframework",config.getLoggingSpring());
         System.setProperty("server.port",String.valueOf(config.getServerPort()));*/
 
-        System.setProperty("logging.level.root","DEBUG");
-        System.setProperty("logging.level.org.springframework","DEBUG");
+        System.setProperty("logging.level.root","INFO");
+        System.setProperty("logging.level.org.springframework","INFO");
         System.setProperty("server.port","8980");
         System.setProperty("management.endpoints.web.exposure.include","*");
         System.setProperty("management.endpoint.health.show-details","always");
@@ -48,8 +48,8 @@ public class JsonConfig {
         props.put("logging.level.org.springframework",config.getLoggingSpring());
         props.put("server.port",String.valueOf(config.getServerPort()));*/
 
-        props.put("logging.level.root","DEBUG");
-        props.put("logging.level.org.springframework","DEBUG");
+        props.put("logging.level.root","INFO");
+        props.put("logging.level.org.springframework","INFO");
         props.put("server.port","8980");
         props.put("management.endpoints.web.exposure.include","*");
         props.put("management.endpoint.health.show-details","always");
