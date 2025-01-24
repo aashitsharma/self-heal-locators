@@ -25,14 +25,14 @@ public class AnalyticsDataController {
         try {
             DynamicData dynamicData = new DynamicData(data);
             Optional<DynamicData> dataDump = dynamicDataRepository.findByDataName((String) data.get("name"));
-            LOGGER.info("/event/create Name of Event : "+ data.get("name") + " - Ref Id:"+ Thread.currentThread().getId());
+            LOGGER.info("/event/create Name of Event : "+ data.get("name"));
             if (!dataDump.isPresent()){
-                LOGGER.info("/event/create saving Data for : "+ data.get("name")+ " - Ref Id:"+ Thread.currentThread().getId());
+                LOGGER.info("/event/create saving Data for : "+ data.get("name"));
                 DynamicData savedData = dynamicDataRepository.save(dynamicData);
                 return new ResponseEntity<>(savedData, HttpStatus.CREATED);
             }
             else {
-                LOGGER.info("/event/create Event already exist for : "+ data.get("name")+ " - Ref Id:"+ Thread.currentThread().getId());
+                LOGGER.info("/event/create Event already exist for : "+ data.get("name"));
                 return new ResponseEntity(dataDump,HttpStatus.OK);
             }
 
@@ -47,6 +47,7 @@ public class AnalyticsDataController {
         Optional<DynamicData> dataDump = dynamicDataRepository.findByDataName(name);
 
         if (dataDump.isPresent()) {
+            LOGGER.info("Fetching Events for : "+name);
             return new ResponseEntity<>(dataDump, HttpStatus.OK);  // Return the 'data' field
         } else {
             return new ResponseEntity<>("Data not found", HttpStatus.NOT_FOUND);
