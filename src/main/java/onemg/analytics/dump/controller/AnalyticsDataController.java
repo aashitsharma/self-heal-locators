@@ -24,15 +24,16 @@ public class AnalyticsDataController {
     public ResponseEntity<DynamicData> createEventsData(@RequestBody Map<String, Object> data) {
         try {
             DynamicData dynamicData = new DynamicData(data);
-            Optional<DynamicData> dataDump = dynamicDataRepository.findByDataName((String) data.get("name"));
+            Optional<DynamicData> dataDump = dynamicDataRepository.findByDataName((String) data.get("event_name"));
             LOGGER.info("/event/create Name of Event : "+ data.get("name"));
             if (!dataDump.isPresent()){
-                LOGGER.info("/event/create saving Data for : "+ data.get("name"));
+                LOGGER.info("/event/create saving Data for : "+ data.get("event_name"));
                 DynamicData savedData = dynamicDataRepository.save(dynamicData);
+
                 return new ResponseEntity<>(savedData, HttpStatus.CREATED);
             }
             else {
-                LOGGER.info("/event/create Event already exist for : "+ data.get("name"));
+                LOGGER.info("/event/create Event already exist for : "+ data.get("event_name"));
                 return new ResponseEntity(dataDump,HttpStatus.OK);
             }
 
@@ -43,7 +44,7 @@ public class AnalyticsDataController {
 
     // GET API to fetch data by name
     @GetMapping("event/{name}")
-    public ResponseEntity<Object> getDataByName(@PathVariable("name") String name) {
+    public ResponseEntity<Object> getDataByName(@PathVariable("event_name") String name) {
         Optional<DynamicData> dataDump = dynamicDataRepository.findByDataName(name);
 
         if (dataDump.isPresent()) {
