@@ -43,7 +43,7 @@ public class AnalyticsDataController {
     }
 
     // GET API to fetch data by name
-    @GetMapping("event/{name}")
+    @GetMapping("event/{event_name}")
     public ResponseEntity<Object> getDataByName(@PathVariable("event_name") String name) {
         Optional<DynamicData> dataDump = dynamicDataRepository.findByDataName(name);
 
