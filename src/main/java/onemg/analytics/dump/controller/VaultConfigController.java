@@ -1,12 +1,10 @@
 package onemg.analytics.dump.controller;
 
 import onemg.analytics.dump.JsonConfig;
+import onemg.analytics.dump.model.ErrorModel;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +17,7 @@ public class VaultConfigController {
     private static final Logger LOGGER = Logger.getLogger(VaultConfigController.class);
 
     private final RestTemplate restTemplate;
-    private JsonConfig properties = new JsonConfig();
+
     @Autowired
     public VaultConfigController(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
@@ -28,10 +26,11 @@ public class VaultConfigController {
     @GetMapping("vault/{project}/{env}")
     public ResponseEntity<Object> getConfig(@PathVariable("project") String project,@PathVariable("env") String env) {
 
-        LOGGER.info("Calling Vault Config");
-        String downstreamUrl = properties.configProperties().getVaultHost()+"/v1/basecamp/data/sla_service/config'"; // URL of downstream API
+        LOGGER.info("Calling Vault Config, Host : "+ JsonConfig.config.getVaultHost());
+        String downstreamUrl = JsonConfig.config.getVaultHost()+"/v1/basecamp/data/sla_service/config'"; // URL of downstream API
+        LOGGER.info("Downstream URL : "+downstreamUrl);
         HttpHeaders headers = new HttpHeaders();
-        headers.set("X-Vault-Token", properties.configProperties().getVaultToken());
+        headers.set("X-Vault-Token", JsonConfig.config.getVaultToken());
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
@@ -41,8 +40,13 @@ public class VaultConfigController {
                 entity,
                 String.class
         );
+        if(response.getStatusCode()== HttpStatusCode.valueOf(200)){
+            return ResponseEntity.status(response.getStatusCode()).body(response.getBody());
+        }
+        else {
+            return ResponseEntity.status(response.getStatusCode()).body(new ErrorModel().errorResp(response.getStatusCode().value(),response.getBody()));
+        }
 
-        return ResponseEntity.status(response.getStatusCode()).body(response.getBody());
     }
 
 }

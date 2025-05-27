@@ -1,6 +1,7 @@
 package onemg.analytics.dump.controller;
 
 import onemg.analytics.dump.model.DynamicData;
+import onemg.analytics.dump.model.ErrorModel;
 import onemg.analytics.dump.repository.DynamicDataRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class AnalyticsDataController {
 
     @PostMapping
     @RequestMapping("event/create")
-    public ResponseEntity<DynamicData> createEventsData(@RequestBody Map<String, Object> data) {
+    public ResponseEntity<Object> createEventsData(@RequestBody Map<String, Object> data) {
         try {
             DynamicData dynamicData = new DynamicData(data);
             Optional<DynamicData> dataDump = dynamicDataRepository.findByDataName((String) data.get("event_name"));
@@ -38,7 +39,7 @@ public class AnalyticsDataController {
             }
 
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.INTERNAL_SERVER_ERROR.value(),e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

@@ -18,6 +18,7 @@ import java.util.Properties;
 public class JsonConfig {
     private static final Logger LOGGER = Logger.getLogger(JsonConfig.class);
     public static Map<String, Object> props = new HashMap<>();
+    public static ConfigProperties config =null;
     @Bean
     public ConfigProperties configProperties() {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -27,7 +28,6 @@ public class JsonConfig {
         if (!file.exists()) {
             file =new File("/config.json");
         }
-        ConfigProperties config =null;
         try{
             config=objectMapper.readValue(file, ConfigProperties.class);
         }
