@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
@@ -34,18 +36,27 @@ public class VaultConfigController {
         LOGGER.info("Calling downstream API:");
         LOGGER.info("URL: "+ downstreamUrl);
         LOGGER.info("Headers: "+ headers);
-
-        ResponseEntity<String> response = restTemplate.exchange(
-                downstreamUrl,
-                HttpMethod.GET,
-                entity,
-                String.class
-        );
-        if(response.getStatusCode()== HttpStatusCode.valueOf(200)){
-            return ResponseEntity.status(response.getStatusCode()).body(response.getBody());
+        ResponseEntity<String> response = null;
+        try
+        {
+             response = restTemplate.exchange(
+                    downstreamUrl,
+                    HttpMethod.GET,
+                    entity,
+                    String.class
+            );
+            if(response.getStatusCode()== HttpStatusCode.valueOf(200)){
+                return ResponseEntity.status(response.getStatusCode()).body(response.getBody());
+            }
+            else {
+                return ResponseEntity.status(response.getStatusCode()).body(new ErrorModel().errorResp(response.getStatusCode().value(),response.getBody()));
+            }
         }
-        else {
-            return ResponseEntity.status(response.getStatusCode()).body(new ErrorModel().errorResp(response.getStatusCode().value(),response.getBody()));
+        catch (HttpClientErrorException e){
+            return ResponseEntity.status(e.getStatusCode()).body(new ErrorModel().errorResp(e.getStatusCode().value(),e.getMessage()));
+        }
+        catch (RestClientException e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorModel().errorResp(HttpStatus.INTERNAL_SERVER_ERROR.value(),e.getMessage()));
         }
 
     }
