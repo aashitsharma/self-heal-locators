@@ -26,13 +26,14 @@ public class VaultConfigController {
     @GetMapping("vault/{project}/{env}")
     public ResponseEntity<Object> getConfig(@PathVariable("project") String project,@PathVariable("env") String env) {
 
-        LOGGER.info("Calling Vault Config, Host : "+ JsonConfig.config.getVaultHost());
         String downstreamUrl = JsonConfig.config.getVaultHost()+"/v1/basecamp/data/sla_service/config'"; // URL of downstream API
-        LOGGER.info("Downstream URL : "+downstreamUrl);
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Vault-Token", JsonConfig.config.getVaultToken());
-
         HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        LOGGER.info("Calling downstream API:");
+        LOGGER.info("URL: "+ downstreamUrl);
+        LOGGER.info("Headers: "+ headers);
 
         ResponseEntity<String> response = restTemplate.exchange(
                 downstreamUrl,
