@@ -39,6 +39,7 @@ public class AnalyticsDataController {
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.INTERNAL_SERVER_ERROR.value(),e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
