@@ -1,6 +1,5 @@
 package onemg.analytics.dump.controller;
 
-import onemg.analytics.dump.ConfigProperties;
 import onemg.analytics.dump.JsonConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -15,12 +14,12 @@ import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("/v1/config")
-public class ConfigController {
+public class VaultConfigController {
 
     private final RestTemplate restTemplate;
     private JsonConfig properties ;
     @Autowired
-    public ConfigController(RestTemplate restTemplate) {
+    public VaultConfigController(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
