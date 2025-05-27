@@ -38,6 +38,8 @@ public class VaultConfigController {
         LOGGER.info("URL: "+ downstreamUrl);
         LOGGER.info("Headers: "+ headers);
         ResponseEntity<String> response = null;
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.setContentType(MediaType.APPLICATION_JSON);
         try
         {
              response = restTemplate.exchange(
@@ -47,17 +49,19 @@ public class VaultConfigController {
                     String.class
             );
             if(response.getStatusCode()== HttpStatusCode.valueOf(200)){
-                return ResponseEntity.status(response.getStatusCode()).body(response.getBody());
+                return new ResponseEntity<>(response.getBody(), responseHeaders, response.getStatusCode());
+
             }
             else {
-                return ResponseEntity.status(response.getStatusCode()).body(new ErrorModel().errorResp(response.getStatusCode().value(),response.getBody()));
+                return new ResponseEntity<>(new ErrorModel().errorResp(response.getStatusCode().value(),response.getBody()), responseHeaders, response.getStatusCode());
             }
         }
         catch (HttpClientErrorException e){
-            return ResponseEntity.status(e.getStatusCode()).body(new ErrorModel().errorResp(e.getStatusCode().value(),e.getMessage()));
+            return new ResponseEntity<>(new ErrorModel().errorResp(e.getStatusCode().value(),e.getMessage()), responseHeaders, e.getStatusCode());
+
         }
         catch (RestClientException e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorModel().errorResp(HttpStatus.INTERNAL_SERVER_ERROR.value(),e.getMessage()));
+            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.INTERNAL_SERVER_ERROR.value(),e.getMessage()), responseHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }
