@@ -6,32 +6,29 @@ import lombok.Data;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class VaultConfigModel {
+    private String request_id;
+    private String lease_id;
+    private boolean renewable;
+    private int lease_duration;
+    private VaultData data;
+    private Object wrap_info;
+    private Object warnings;
+    private Object auth;
+    private String vault_request_id;
 
+    @Data
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public class Data{
-        public Data data;
-        public Metadata metadata;
+    public static class VaultData {
+        private Object data; // or use Map<String, Object> if dynamic
+        private Metadata metadata;
     }
 
+    @Data
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public class Metadata{
-        public String created_time;
-        public String deletion_time;
-        public boolean destroyed;
-        public int version;
+    public static class Metadata {
+        private String created_time;
+        private String deletion_time;
+        private boolean destroyed;
+        private int version;
     }
-
-
-        public String request_id;
-        public String lease_id;
-        public boolean renewable;
-        public int lease_duration;
-        public Data data;
-        public Object wrap_info;
-        public Object warnings;
-        public Object auth;
-        public String vault_request_id;
-
-
-
 }
