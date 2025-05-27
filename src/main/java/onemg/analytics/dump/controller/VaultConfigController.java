@@ -1,8 +1,12 @@
 package onemg.analytics.dump.controller;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import onemg.analytics.dump.JsonConfig;
 import onemg.analytics.dump.model.ErrorModel;
+import onemg.analytics.dump.model.VaultConfigModel;
 import org.apache.log4j.Logger;
+import org.apache.log4j.MDC;
+import org.bson.json.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +41,8 @@ public class VaultConfigController {
         LOGGER.info("Project: " + project + ", Env: " + env);
         LOGGER.info("URL: "+ downstreamUrl);
         LOGGER.info("Headers: "+ headers);
-        ResponseEntity<String> response = null;
+        ResponseEntity<VaultConfigModel> response = null;
+        VaultConfigModel model =null;
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setContentType(MediaType.APPLICATION_JSON);
         try
@@ -46,14 +51,17 @@ public class VaultConfigController {
                     downstreamUrl,
                     HttpMethod.GET,
                     entity,
-                    String.class
+                    VaultConfigModel.class
             );
             if(response.getStatusCode()== HttpStatusCode.valueOf(200)){
-                return new ResponseEntity<>(response.getBody(), responseHeaders, response.getStatusCode());
+                model = response.getBody();
+                model.setVault_request_id(model.getRequest_id());
+                model.setRequest_id((String) MDC.get("reference"));
+                return new ResponseEntity<>(model, responseHeaders, response.getStatusCode());
 
             }
             else {
-                return new ResponseEntity<>(new ErrorModel().errorResp(response.getStatusCode().value(),response.getBody()), responseHeaders, response.getStatusCode());
+                return new ResponseEntity<>(new ErrorModel().errorResp(response.getStatusCode().value(),"Something Wend Wrong with Downstream"), responseHeaders, response.getStatusCode());
             }
         }
         catch (HttpClientErrorException e){
