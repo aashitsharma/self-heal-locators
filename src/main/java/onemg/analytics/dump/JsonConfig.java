@@ -2,8 +2,10 @@ package onemg.analytics.dump;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
 import java.io.FileReader;
@@ -17,7 +19,7 @@ public class JsonConfig {
     private static final Logger LOGGER = Logger.getLogger(JsonConfig.class);
     public static Map<String, Object> props = new HashMap<>();
     @Bean
-    public ConfigProperties configProperties() throws IOException {
+    public ConfigProperties configProperties() {
         ObjectMapper objectMapper = new ObjectMapper();
         LOGGER.info("Attempting to load config.json...");
         // Path to the root-level config.json file
@@ -25,7 +27,13 @@ public class JsonConfig {
         if (!file.exists()) {
             file =new File("/config.json");
         }
-        ConfigProperties config = objectMapper.readValue(file, ConfigProperties.class);
+        ConfigProperties config =null;
+        try{
+            config=objectMapper.readValue(file, ConfigProperties.class);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
         LOGGER.info("Loaded ConfigProperties: "+ config);
         setProperties(config);
         return config;
@@ -53,5 +61,10 @@ public class JsonConfig {
         props.put("server.port","8980");
         props.put("management.endpoints.web.exposure.include","*");
         props.put("management.endpoint.health.show-details","always");
+    }
+
+    @Bean
+    public RestTemplate restTemplate(RestTemplateBuilder builder) {
+        return builder.build();
     }
 }

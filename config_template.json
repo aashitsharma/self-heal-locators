@@ -1,3 +1,8 @@
 {
-  "spring.data.mongodb.uri": "mongodb://onemg-mongodb-svc.{{ env_name }}.svc.{{ cluster_domain }}/analytics_data_dump"
+  "logging.level.org.springframework": "DEBUG",
+  "logging.level.root": "DEBUG",
+  "server.port": 0,
+  "spring.data.mongodb.uri": "mongodb://onemg-mongodb-svc.{{ env_name }}.svc.{{ cluster_domain }}/analytics_data_dump",
+  "vault.host": "",
+  "vault.token": ""
 }

@@ -19,4 +19,8 @@ public class ConfigProperties {
     private String loggingSpring;
     @JsonProperty("server.port")
     private int serverPort;
+    @JsonProperty("vault.host")
+    private String vaultHost;
+    @JsonProperty("vault.token")
+    private String vaultToken;
 }
