@@ -1,6 +1,7 @@
 package onemg.analytics.dump.controller;
 
 import onemg.analytics.dump.JsonConfig;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -15,9 +16,10 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 @RequestMapping("/v1/config")
 public class VaultConfigController {
+    private static final Logger LOGGER = Logger.getLogger(VaultConfigController.class);
 
     private final RestTemplate restTemplate;
-    private JsonConfig properties ;
+    private JsonConfig properties = new JsonConfig();
     @Autowired
     public VaultConfigController(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
@@ -26,7 +28,7 @@ public class VaultConfigController {
     @GetMapping("vault/{project}/{env}")
     public ResponseEntity<Object> getConfig(@PathVariable("project") String project,@PathVariable("env") String env) {
 
-        properties.configProperties().getVaultToken();
+        LOGGER.info("Calling Vault Config");
         String downstreamUrl = properties.configProperties().getVaultHost()+"/v1/basecamp/data/sla_service/config'"; // URL of downstream API
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Vault-Token", properties.configProperties().getVaultToken());
