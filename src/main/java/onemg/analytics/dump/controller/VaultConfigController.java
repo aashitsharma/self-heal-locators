@@ -29,18 +29,21 @@ public class VaultConfigController {
         this.restTemplate = restTemplate;
     }
 
+    /***
+     * This API is responsible to fetch vault config for given project and environment from 1mg vault server
+     * @param project : for which vault config needs to be retrieved
+     * @param env : environment for which vault config is required
+     * @return JSON of Vault config data
+     */
     @GetMapping("vault/{project}/{env}")
     public ResponseEntity<Object> getConfig(@PathVariable("project") String project,@PathVariable("env") String env) {
 
-        String downstreamUrl = JsonConfig.config.getVaultHost()+"/v1/basecamp/data/"+project+"/config"; // URL of downstream API
+        String downstreamUrl = JsonConfig.config.getVaultHost()+"/v1/basecamp/data/"+project+"/config";
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Vault-Token", JsonConfig.config.getVaultToken());
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
-        LOGGER.info("Calling downstream API:");
-        LOGGER.info("Project: " + project + ", Env: " + env);
-        LOGGER.info("URL: "+ downstreamUrl);
-        LOGGER.info("Headers: "+ headers);
+        LOGGER.info("Calling downstream API : "+ downstreamUrl);
         ResponseEntity<VaultConfigModel> response = null;
         VaultConfigModel model =null;
         HttpHeaders responseHeaders = new HttpHeaders();
