@@ -60,18 +60,22 @@ public class VaultConfigController {
                 model = response.getBody();
                 model.setVault_request_id(model.getRequest_id());
                 model.setRequest_id((String) MDC.get("reference"));
+                LOGGER.info(" Status Code : "+response.getStatusCode() +" | API : "+downstreamUrl);
                 return new ResponseEntity<>(model, responseHeaders, response.getStatusCode());
 
             }
             else {
-                return new ResponseEntity<>(new ErrorModel().errorResp(response.getStatusCode().value(),"Something Wend Wrong with Downstream"), responseHeaders, response.getStatusCode());
+                LOGGER.info("Response Body : "+response.getBody() + " | Status Code : "+response.getStatusCode() +" | API : "+downstreamUrl);
+                return new ResponseEntity<>(new ErrorModel().errorResp(response.getStatusCode().value(),"Something Went Wrong with Downstream API"), responseHeaders, response.getStatusCode());
             }
         }
         catch (HttpClientErrorException e){
+            LOGGER.info("Exception Occurred : "+e.getMessage() + " | Status Code : "+e.getStatusCode() +" | API : "+downstreamUrl);
             return new ResponseEntity<>(new ErrorModel().errorResp(e.getStatusCode().value(),e.getMessage()), responseHeaders, e.getStatusCode());
 
         }
         catch (RestClientException e){
+            LOGGER.info("Exception Occurred : "+e.getMessage() + " | Status Code : 500 | API : "+downstreamUrl);
             return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.INTERNAL_SERVER_ERROR.value(),e.getMessage()), responseHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
