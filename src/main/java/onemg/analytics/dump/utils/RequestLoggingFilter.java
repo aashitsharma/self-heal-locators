@@ -30,7 +30,8 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
             long duration = System.currentTimeMillis() - startTime;
             int status = response.getStatus();
             String path = request.getRequestURI();
-            LOGGER.info("Status : "+status+" | Duration : "+duration+" ms | API : "+path + " | Query Params : "+request.getQueryString());
+            if(!path.equalsIgnoreCase("/actuator/health"))
+                LOGGER.info("Status : "+status+" | Duration : "+duration+" ms | API : "+path + " | Query Params : "+request.getQueryString());
             // Clear MDC after the request completes
             MDC.remove(REFERENCE_KEY);
         }
