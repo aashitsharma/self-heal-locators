@@ -12,6 +12,11 @@ public class CommonUtility {
 
     private static final Logger LOGGER = Logger.getLogger(CommonUtility.class);
 
+    /**
+     * Method is responsible for parsing json from file path provided and return Map
+     * @param filePath : Provide Path from source route (path after src/main/resources/)
+     * @return Map<String, Object> which can be used to return
+     */
     public static Map<String, Object> readJsonAsMap(String filePath) {
         ObjectMapper mapper = new ObjectMapper();
 
