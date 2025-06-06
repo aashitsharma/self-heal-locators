@@ -2,6 +2,7 @@ package onemg.analytics.dump.utils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 import java.io.InputStream;
@@ -36,15 +37,17 @@ public class CommonUtility {
      * @param enumeration : Required to extract headers
      * @return
      */
-    public static String joinEnumeration(Enumeration<String> enumeration) {
+    public static String extractHeaders(Enumeration<String> enumeration, HttpServletRequest request) {
         StringBuilder sb = new StringBuilder();
-
+        sb.append("{ ");
         while (enumeration.hasMoreElements()) {
-            sb.append(enumeration.nextElement());
+            String key = enumeration.nextElement();
+            sb.append(key +" : "+request.getHeader(key));
             if (enumeration.hasMoreElements()) {
                 sb.append(", ");
             }
         }
+        sb.append(" }");
         return sb.toString();
     }
 
