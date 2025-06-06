@@ -26,9 +26,14 @@ public class MockControllerDummy {
 
     @GetMapping("/mocked-endpoint")
     public ResponseEntity<?> getMockedResponse(HttpServletRequest request, HttpEntity<String> entity, @RequestParam(required = false) String mock) {
-        // 1. Match condition: Only serve mock if query param mock=true
-        if ("true".equalsIgnoreCase(mock)) {
-            return ResponseEntity.ok(CommonUtility.readJsonAsMap("MockData/Dummy/SKU_232763.json"));
+        try {
+            // 1. Match condition: Only serve mock if query param mock=true
+            if ("true".equalsIgnoreCase(mock)) {
+                return ResponseEntity.ok(CommonUtility.readJsonAsMap("MockData/Dummy/SKU_232763.json"));
+            }
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.INTERNAL_SERVER_ERROR.value(),e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         // 2. Else: Proxy the request
         return proxyUnmatchedRequests(request,entity);
