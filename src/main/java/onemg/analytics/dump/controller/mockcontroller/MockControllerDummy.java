@@ -28,7 +28,7 @@ public class MockControllerDummy {
     public ResponseEntity<?> getMockedResponse(HttpServletRequest request, HttpEntity<String> entity, @RequestParam(required = false) String mock) {
         // 1. Match condition: Only serve mock if query param mock=true
         if ("true".equalsIgnoreCase(mock)) {
-            return ResponseEntity.ok(CommonUtility.readJsonAsMap("src/main/resources/MockData/Dummy/SKU_232763.json"));
+            return ResponseEntity.ok(CommonUtility.readJsonAsMap("MockData/Dummy/SKU_232763.json"));
         }
         // 2. Else: Proxy the request
         return proxyUnmatchedRequests(request,entity);
