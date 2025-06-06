@@ -1,8 +1,11 @@
 package onemg.analytics.dump.controller.mockcontroller;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import jakarta.servlet.http.HttpServletRequest;
 import onemg.analytics.dump.JsonConfig;
 import onemg.analytics.dump.model.ErrorModel;
+import onemg.analytics.dump.utils.CommonUtility;
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +28,7 @@ public class MockControllerDummy {
     public ResponseEntity<?> getMockedResponse(HttpServletRequest request, HttpEntity<String> entity, @RequestParam(required = false) String mock) {
         // 1. Match condition: Only serve mock if query param mock=true
         if ("true".equalsIgnoreCase(mock)) {
-            return ResponseEntity.ok(Map.of("status", "mocked", "data", "Mocked data served"));
+            return ResponseEntity.ok(CommonUtility.readJsonAsMap("src/main/resources/MockData/Dummy/SKU_232763.json"));
         }
         // 2. Else: Proxy the request
         return proxyUnmatchedRequests(request,entity);

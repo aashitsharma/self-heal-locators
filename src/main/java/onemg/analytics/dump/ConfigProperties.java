@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.util.Map;
 
 
 @Data
@@ -23,4 +24,7 @@ public class ConfigProperties {
     private String vaultHost;
     @JsonProperty("vault.token")
     private String vaultToken;
+    @JsonProperty("mock.data.object")
+    private Map<String,Object> mockObject;
+
 }

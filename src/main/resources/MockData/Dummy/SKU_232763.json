@@ -1,0 +1,827 @@
+{
+  "data": {
+    "translation_tags": {
+      "products": [
+        "Losatan 25mg Tablet",
+        "Covance 25 Tablet",
+        "Zilos 25 Tablet",
+        "Losar 25 Tablet",
+        "Repace 25 Tablet",
+        "Losakind 25 Tablet"
+      ]
+    },
+    "substitutes": {
+      "header": "All substitutes for Losatan 25mg Tablet",
+      "disclaimer": "For information purposes only. Consult a doctor before taking any medicine.",
+      "data": [
+        {
+          "id": "17346",
+          "sub_header": "by Sun Pharmaceutical Industries Ltd",
+          "header": "Covance 25 Tablet",
+          "display_text": "₹5.35/tablet",
+          "tag": {
+            "text": "57% costlier",
+            "text_color": "#FFBC2B"
+          },
+          "slug": "/drugs/covance-25-tablet-17346",
+          "eta": null,
+          "ga_data": null
+        },
+        {
+          "id": "17207",
+          "sub_header": "by FDC Ltd",
+          "header": "Zilos 25 Tablet",
+          "display_text": "₹2.2/tablet",
+          "tag": {
+            "text": "35% cheaper",
+            "text_color": "#208376"
+          },
+          "slug": "/drugs/zilos-25-tablet-17207",
+          "eta": null,
+          "ga_data": null
+        },
+        {
+          "id": "74800",
+          "sub_header": "by Torrent Pharmaceuticals Ltd",
+          "header": "Losar 25 Tablet",
+          "display_text": "₹6.62/tablet",
+          "tag": {
+            "text": "94% costlier",
+            "text_color": "#FFBC2B"
+          },
+          "slug": "/drugs/losar-25-tablet-74800",
+          "eta": null,
+          "ga_data": null
+        },
+        {
+          "id": "17296",
+          "sub_header": "by Sun Pharmaceutical Industries Ltd",
+          "header": "Repace 25 Tablet",
+          "display_text": "₹5.85/tablet",
+          "tag": {
+            "text": "72% costlier",
+            "text_color": "#FFBC2B"
+          },
+          "slug": "/drugs/repace-25-tablet-17296",
+          "eta": null,
+          "ga_data": null
+        },
+        {
+          "id": "17205",
+          "sub_header": "by Mankind Pharma Ltd",
+          "header": "Losakind 25 Tablet",
+          "display_text": "₹3.16/tablet",
+          "tag": {
+            "text": "7% cheaper",
+            "text_color": "#208376"
+          },
+          "slug": "/drugs/losakind-25-tablet-17205",
+          "eta": null,
+          "ga_data": null
+        }
+      ],
+      "cta": {
+        "text": "See all",
+        "redirect_url": "/drugs-substitutes/losatan-25mg-tablet-232763"
+      },
+      "type": "ALL_SUBSTITUTES"
+    },
+    "related_lab_tests": {
+      "header": "Related lab tests",
+      "values": [
+        {
+          "id": 2561,
+          "name": "Kidney Function Test",
+          "slug": "/labs/test/kidney-function-test-2561"
+        }
+      ],
+      "view_all": "View all"
+    },
+    "in_stock_substitutes_redirection_widget": null,
+    "price_box": {
+      "pack_size": "10 tablets",
+      "values": [
+        {
+          "disclaimer": "(inclusive of all taxes)",
+          "mrp": {
+            "display_text": "MRP ",
+            "price": "₹46.3"
+          },
+          "discount": {
+            "price": "₹34.1",
+            "display_text": null,
+            "header": "Regular price:"
+          },
+          "sale_price": null,
+          "type": "upsell_member_view",
+          "upsell_info": {
+            "icon": "https://onemg.gumlet.io/knuoou3jcmae6vetiv2f.png",
+            "header": "member's price:",
+            "price": "₹29.33",
+            "display_text": "+ free shipping",
+            "description": "Price valid on orders above ₹2000. Max. discount per order is ₹540."
+          },
+          "selected": true
+        }
+      ],
+      "quantity_info": {
+        "min": 1,
+        "max": 20,
+        "selling_quantity": 10
+      },
+      "individual_prices": null,
+      "disclaimer": "(inclusive of all taxes)",
+      "best_price_variant": "test1",
+      "atc_experiment": {
+        "variant": null
+      },
+      "mix_panel_data": {
+        "sku_id": "232763",
+        "sku_name": "Losatan 25mg Tablet",
+        "mrp": 46.3,
+        "discount_percent": 26,
+        "eta": 7200,
+        "eta_text": "Get by 7pm, Today",
+        "cta_text": "ADD",
+        "pincode": 122001,
+        "epoch_eta": 1749216600,
+        "cta_type": "price_box",
+        "cp_recommended_type": null,
+        "cp_recommended_type_old": null,
+        "new_cp_plan_cohort": null,
+        "list_price": 34.1,
+        "cp_list_price": 29.33,
+        "cp_discount_percent": 13.99,
+        "is_bo_applicable": false,
+        "brand_offer_type": []
+      },
+      "ctas": [
+        {
+          "text": "ADD",
+          "action": "ADD_TO_CART",
+          "details": {
+            "sku_id": "232763",
+            "min_quantity": 1,
+            "selling_quantity": 10,
+            "quantity": 10,
+            "display_text": "Min ordered quantity: "
+          }
+        }
+      ],
+      "sku_id": 232763,
+      "unavailable_image": null,
+      "discounting_mix_panel_data": {
+        "discounting_mweb_pdp_cohort": null,
+        "discounting_nudge_shown": false,
+        "discounting_coupon_shown": "",
+        "discount_per_shown_on_nudge": 0,
+        "discounting_nudge_type": "generic_rx"
+      }
+    },
+    "variants": [],
+    "dfp_ad": null,
+    "other_information": {
+      "header": "Other information",
+      "display_text": "A <a href='https://www.1mg.com/vendor-details/losatan-25mg-tablet-232763'>licensed vendor partner</a> from your nearest location will deliver Losatan 25mg Tablet. Once the pharmacy accepts your order, the details of the pharmacy will be shared with you. Acceptance of your order is based on the validity of your doctor's &#8478; and the availability of this medicine.<br><b><h3>Marketer details</h3></b><strong>Name: </strong>Biochem Pharmaceutical Industries<br><strong>Address: </strong>BIOCHEM PHARMA, LG 113 / A, Xth Central Mall,  Mahavir Nagar, 90ft Road,  Next to D Mart, Kandivali - West,  Mumbai - 400067.<br><br>Country of origin: India <br><br><h3>In case of any issues, contact us</h3> <strong>Email ID:</strong> care@1mg.com<br><strong>Phone Number:</strong> 0124-4166666<br><strong>Address:</strong> 5th Floor Tower - B of the Presidency Building, 46/4 Mehrauli Gurgaon Road, Sector 14, Gurugram, Haryana-122001, India"
+    },
+    "specifications": [
+      "<span>Expires on or after <b>Oct, 2026</b></span>"
+    ],
+    "offers": {
+      "header": "Save more with additional offers",
+      "upfront_count": 3,
+      "values": [
+        {
+          "header": "Offer details",
+          "title": "Earn cashback up to Rs. 100 with Amazon Pay Balance",
+          "sub_title": "Earn cashback up to Rs. 100 with Amazon Pay Balance",
+          "image_url": "https://onemg.gumlet.io/marketing/ff6db98b-7a01-40ea-95f9-b44e9b4c0ebd.png",
+          "description": "Pay with Amazon Pay Balance and get cashback up to Rs. 100 with minimum cashback of Rs. 20. Offer ends 30th June'25. Minimum cart value to avail the offer is Rs. 699. Reward is available behind scratch card on Amazon Pay."
+        },
+        {
+          "header": "Offer details",
+          "title": "Get assured cashback up to ₹300 on 1st & 3rd transactions using Paytm UPI Lite/UPI",
+          "sub_title": "Get assured cashback up to ₹300 on 1st & 3rd transactions using Paytm UPI Lite/UPI",
+          "image_url": "https://onemg.gumlet.io/v1604685456/marketing/tdrscrdgug8sb9gcokwq.png",
+          "description": "Assured cashback up to ₹300 on 1st & 3rd txn using Paytm UPI"
+        },
+        {
+          "header": "Offer details",
+          "title": "Earn cashback up to Rs. 100 with Amazon Pay Later",
+          "sub_title": "Earn cashback up to Rs. 100 with Amazon Pay Later",
+          "image_url": "https://onemg.gumlet.io/marketing/ff6db98b-7a01-40ea-95f9-b44e9b4c0ebd.png",
+          "description": "Pay with Amazon Pay Later on Tata 1mg for Rs. 699 and more and earn cashback up to Rs. 100 with minimum cashback of Rs. 20. Offer ends 30th June'25. Reward is available behind scratch card on Amazon Pay."
+        },
+        {
+          "header": "Offer details",
+          "title": "Get up to up Rs. 500 NeuCoins",
+          "sub_title": "Get up to up Rs. 500 NeuCoins",
+          "image_url": "https://onemg.gumlet.io/marketing/05fee363-a054-4cac-8ede-97138b0ca69f.png",
+          "description": "Get up to Rs. 500 Neu coins for every transaction on Tata 1mg above Rs. 100 from 1st to 30th June'25 using Tata Pay Later."
+        },
+        {
+          "header": "Offer details",
+          "title": "Get up to Rs. 300 cashback on paying via CRED UPI",
+          "sub_title": "Get up to Rs. 300 cashback on paying via CRED UPI",
+          "image_url": "https://onemg.gumlet.io/marketing/a08fc7ce-311c-4118-857c-8887aaaf439a.PNG",
+          "description": "Get up to Rs. 300 cashback on paying via CRED UPI.  Minimum cart value to avail the offer is Rs. 500. Valid till 30th June'25."
+        },
+        {
+          "header": "Offer details",
+          "title": "Get cashback up to ₹500",
+          "sub_title": "Get cashback up to ₹500",
+          "image_url": "https://onemg.gumlet.io/image/upload/v1631000321/yvtqbcj9sa7zx5g0ghuc.jpg",
+          "description": "Pay with Mobikwik wallet and get up to Rs. 500 Cashback. Minimum cart value for the offer is ₹999. Offer valid till 30th June'25."
+        },
+        {
+          "header": "Offer details",
+          "title": "Get upto Rs.150 Cashback",
+          "sub_title": "Get upto Rs.150 Cashback",
+          "image_url": "https://onemg.gumlet.io/image/upload/v1631000321/yvtqbcj9sa7zx5g0ghuc.jpg",
+          "description": "Get upto Rs.150 Cashback on minimum transaction of Rs.599/- with Mobikwik UPI.<br><p><strong>Get upto Rs.150 Cashback on minimum transaction of Rs.599/- with Mobikwik UPI.</strong></p>\n<ul>\n<li>Flat 75 Assured Cashback on first ever transaction using MobiKwik UPI</li>\n<li>Minimum transaction Amount - Rs 599</li>\n<li>Offer can be availed once per user in a calendar monthUsers must complete a UPI transaction on Tata 1mg to be eligible.</li>\n<li>Offer validity till 30th June'25</li>\n<li>Download the MobiKwik App to create an ikwik handle and complete UPI KYC.</li>\n</ul>"
+        }
+      ],
+      "cta": {
+        "text": "See all offers"
+      }
+    },
+    "addons": {
+      "is_enabled": true,
+      "token": {
+        "vas_params": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzb3VyY2UiOiJwZHAiLCJ1c2VyIjp7ImlkIjoiMmMxMTlkODgtNDdiZS00MGJiLWE2YTktZjU5MWU2MmQ1MThkIiwiaGFzX3N1Y2Nlc3NmdWxfdHJhbnNhY3Rpb24iOnRydWUsInZpc2l0b3JfaWQiOiI0MDliOWI1MS01OGQ1LTRkOTItOTkxZC1hYjQ5OWVmMGQ3YmNfU2FKbDU4SVVYT18xNjQ4XzE3NDkxOTgyNDAyMDIifSwiY2FydCI6eyJza3VzIjpbeyJpZCI6MjMyNzYzLCJhbW91bnQiOjM0LjEsIm1hcmtldGVyX2lkIjo1NTM0MywibWV0YWRhdGEiOnsidGMiOlsiQ0FSRElPVkFTQ1VMQVIgU1lTVEVNIiwiQ0FSRElBQyIsIkFOR0lPVEVOU0lOIElJIEFOVEFHT05JU1RTIFBMQUlOIl0sImNhdGVnb3J5X2lkcyI6W10sInR5cGUiOiJhbGxvcGF0aHkiLCJpc19mcmVlYmllIjpudWxsfSwic2t1X3R5cGUiOiJhbGxvcGF0aHkiLCJwYWdlcyI6W10sImlzX2NvdXBvbl9hcHBsaWNhYmxlIjp0cnVlfV0sInBheW1lbnRfbW9kZSI6WyJQQVlVIiwiUEFZVE0iLCJUQVRBUEFZIiwiUEFZUEFMIiwiUkFaT1JQQVkiLCJTSU1QTCIsIlBIT05FUEUiLCJDT0QiXSwibG9jYXRpb24iOiJHdXJnYW9uIiwicGxhdGZvcm0iOiJpb3MiLCJwbGF0Zm9ybV92ZXJzaW9uIjoiMTkuNy4wIn19.LIrcQe5ZEadw9EBdNH91PbZcEg9RmJiep6JMrSPOIZQ",
+        "sku_details": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTG9zYXRhbiAyNW1nIFRhYmxldCIsInR5cGUiOiJhbGxvcGF0aHkifQ.5pEQ_XUYUDfGOXNXphbUV_Z1EgLnS4XmKmNFWx8X0wM"
+      }
+    },
+    "eta": null,
+    "ga_data": {
+      "availability_status": "available",
+      "cp_upsell": "Not Eligible",
+      "sku_id": "232763",
+      "backend_exp": {
+        "substitute_widget": false,
+        "pack_size_widget": false,
+        "similar_widget": false,
+        "variant_widget": false,
+        "formulary_present": false,
+        "substitution_v3_oos2": null,
+        "substitution_v3_instock": null,
+        "list_of_substitutes": {
+          "substitutes": [
+            {
+              "entity_id": 69554,
+              "entity_name": "Angizaar 25 Tablet",
+              "position": 1,
+              "entity_price": 39,
+              "entity_discounted_price": 37.1,
+              "discount": 5
+            }
+          ],
+          "pack_sizes": [],
+          "variants": []
+        },
+        "redirection_card": null,
+        "total_formulary_skus": 1,
+        "formulary_skus_omitted": 1,
+        "widget_not_shown_reason": "cheaper by more than 50%",
+        "widget_not_shown_reason_mix_panel": "cheaper_by_more_than_50%",
+        "eta": {
+          "eta": 7200,
+          "epoch_eta": 1749216600,
+          "eta_variant": null,
+          "returnable": true,
+          "eta_shown": true,
+          "eta_available": true,
+          "eta_text": "Get by 7pm, Today",
+          "entity_id": "232763",
+          "entity_name": "Losatan 25mg Tablet",
+          "pincode": "122001",
+          "is_eta_substitution_enabled_otc": false
+        },
+        "whatsapp_growth": {
+          "sku_id": 232763,
+          "is_enabled": false,
+          "cohort": "Control Set"
+        },
+        "pricing_transparency_v1": {
+          "cohort": "Control_2",
+          "is_care_plan_user": true,
+          "is_care_plan_in_cart": false,
+          "offer_widget_seen": false,
+          "offer_widget_contains": {},
+          "offer_widget_eligible": true,
+          "care_plan_widget_seen": false,
+          "care_plan_widget_eligible": false,
+          "care_plan_widget_contains": {}
+        }
+      },
+      "care_plan_pdp": "upsell_member_view,0,Disabled",
+      "active_care_plan_member": true
+    },
+    "embedded_video": null,
+    "substitutes_upsell": null,
+    "refill": null,
+    "substitutes_footer": null,
+    "vendors": {
+      "header": "Vendor Details",
+      "display_text": "<b>Country of origin: India<br><b>Expires on or after: </b> Oct, 2026<br/><br>A <a href='https://www.1mg.com/vendor-details/losatan-25mg-tablet-232763'>licensed vendor partner</a> from your nearest location will deliver Losatan 25mg Tablet. Once the pharmacy accepts your order, the details of the pharmacy will be shared with you. Acceptance of your order is based on the validity of your doctor's &#8478; and the availability of this medicine.</b><h3>In case of any issues, contact us</h3> <strong>Email ID:</strong> care@1mg.com<br><strong>Phone Number:</strong> 0124-4166666<br><strong>Address:</strong> 5th Floor Tower - B of the Presidency Building, 46/4 Mehrauli Gurgaon Road, Sector 14, Gurugram, Haryana-122001, India"
+    },
+    "should_call_widget_api": true,
+    "prescription_required": {
+      "display_text": "This item requires prescription",
+      "cta": {
+        "text": "Why?",
+        "action": "BOTTOM_SHEET"
+      },
+      "icon": "https://onemg.gumlet.io/marketing/yjglttewtdy9u1o3ycrh.png",
+      "bottomsheet": {
+        "header": "Why we need a prescription?",
+        "cta": {
+          "text": "Okay",
+          "action": "CLOSE"
+        },
+        "widgets": [
+          {
+            "type": "how_it_works",
+            "values": [
+              {
+                "header": "Provide right medicines",
+                "display_text": "Prescriptions are complex documents. We proof read and recheck at various steps to provide you the right medication in the correct form and dose",
+                "icon": "https://onemg.gumlet.io/image/upload/fssu9mbch4bpdr1wj4dd.png"
+              },
+              {
+                "header": "In accordance with the law",
+                "display_text": "Most medicines cannot be sold without a valid prescription, as per the Drugs and Cosmetics Act, 1940 and Rules, 1945",
+                "icon": "https://onemg.gumlet.io/image/upload/fs0clfwbjqnzqmpozpvl.png"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "mix_panel_data": {
+      "sku_id": "232763",
+      "app_download_nudge_cohort": null,
+      "mrp": 46.3,
+      "sku_availability_status": "available",
+      "eta": 7200,
+      "eta_available": true,
+      "available_vpc_ids": [
+        2584,
+        2583
+      ],
+      "eta_text": "Get by 7pm, Today",
+      "pincode": 122001,
+      "returnable": true,
+      "epoch_eta": 1749216600,
+      "ratings_widget_shown": null,
+      "formulary_present": false,
+      "cp_widget_type_shown": "upsell_member_view",
+      "buy_now_cohort": null,
+      "pdp_cp_cohort": "Control_2",
+      "cp_recommended_type": null,
+      "cp_recommended_type_old": null,
+      "new_cp_plan_cohort": null,
+      "same_day_delivery_experiment_cohort": "control1",
+      "brand_offer_cohort": "Test_2",
+      "brand_offer_type": [],
+      "total_formulary_skus": 1,
+      "formulary_skus_omitted": 1,
+      "formulary_widget_not_shown_reason": "cheaper_by_more_than_50%",
+      "minimum_eta_sku": null,
+      "substitution_widget_eligible": false,
+      "substitution_widget_viewed": false,
+      "substitution_widget_fd_cohort": "test_1",
+      "pdp_vsat_cohort": "test_2",
+      "coupon_shown": false,
+      "additional_offers_widget_shown": true,
+      "reco_pdp_cohort": "ControlSet2",
+      "category_l1": "RX",
+      "category_l2": "CARDIAC",
+      "category_l3": null,
+      "product_substitution_widget_shown": true,
+      "reco_rx_pdp_cohort": "ControlSet2",
+      "rx_otc_type": "rx",
+      "description_at_bottom_cohort": "Test_1"
+    },
+    "welcome_popup": null,
+    "available_coupons": null,
+    "global_mix_panel_data": {
+      "pharma_user_type": "existing",
+      "cp_added": false,
+      "cp_added_type": null
+    },
+    "is_description_at_bottom": false,
+    "is_pdp_transition_enabled": false,
+    "neucoins_banner": null,
+    "app_download_nudge": null,
+    "brief_info": [
+      {
+        "header": "Prescription",
+        "sub_header": "required",
+        "left_icon": "https://onemg.gumlet.io/marketing/7c6befe8-193b-4c5e-93c6-bd5d7ad3316f.png",
+        "cta": {
+          "action": "OPEN_RX_BOTTOMSHEET",
+          "content_description": "Prescription required",
+          "details": {
+            "target_url": null
+          }
+        }
+      },
+      {
+        "header": "196 people",
+        "sub_header": "viewed recently",
+        "left_icon": "https://onemg.gumlet.io/marketing/3a085a3e-7aab-4cbc-ad20-ed16f710988c.png",
+        "cta": {
+          "action": null,
+          "content_description": "196 people viewed recently",
+          "details": {
+            "target_url": null
+          }
+        }
+      }
+    ],
+    "trust_bottomsheet": {},
+    "sku_images": [],
+    "eta_data": {
+      "eta_one_liner": {
+        "header": "<span style='color:#3B3B3B'>Get by</span> <b><span style='color:#3B3B3B'>7pm, Today</span></b>",
+        "icon": "https://onemg.gumlet.io/marketing/3a1e34d6-a06d-4772-9b51-b483e47202d2.png",
+        "vsat_header": "Get by",
+        "vsat_sub_header": "7pm, Today"
+      },
+      "eta_widget": {
+        "header": "<span style='color:#3B3B3B'>Get by</span> <span style='color:#3B3B3B'><b>7pm, Today</b></span>",
+        "delivery": {
+          "header": "Delivering to:",
+          "pincode": "122001",
+          "city": "Gurgaon",
+          "text": "122001, Gurgaon"
+        },
+        "info": [
+          {
+            "icon": "https://onemg.gumlet.io/hcufcbnzzpo68ozvvmjl.png",
+            "text": "<span>Cash on delivery available</span>",
+            "url": null
+          },
+          {
+            "icon": "https://onemg.gumlet.io/vibhpgxuwz9lwb971nfk.png",
+            "text": "<span>Easy 7 days return available</span>",
+            "url": "/return-policy"
+          }
+        ],
+        "sub_header": null
+      },
+      "login_widget": null,
+      "ga_data": {
+        "info": {
+          "eta": 7200,
+          "epoch_eta": 1749216600,
+          "eta_variant": null,
+          "returnable": true,
+          "eta_shown": true,
+          "eta_available": true,
+          "eta_text": "Get by 7pm, Today",
+          "entity_id": "232763",
+          "entity_name": "Losatan 25mg Tablet",
+          "pincode": "122001",
+          "is_eta_substitution_enabled_otc": false
+        }
+      }
+    },
+    "rapid_eta_data": {
+      "eta_one_liner": {
+        "header": "<span style='color:#3B3B3B'>Get by</span> <b><span style='color:#3B3B3B'>7pm, Today</span></b>",
+        "flash_icon": "https://onemg.gumlet.io/marketing/3a1e34d6-a06d-4772-9b51-b483e47202d2.png",
+        "background_image": "https://onemg.gumlet.io/marketing/4a95c905-d711-4ade-add9-1f8a6b2f77da.png",
+        "cta": {
+          "icon": "https://onemg.gumlet.io/image/upload/v1638428597/oezi3bu7trt3k7rysaxu.png",
+          "action": "REDIRECT"
+        },
+        "vsat_header": "Get by",
+        "vsat_sub_header": "7pm, Today"
+      },
+      "eta_widget": {
+        "header": "<span style='color:#3B3B3B'>Get by</span> <span style='color:#3B3B3B'><b>7pm, Today</b></span>",
+        "delivery": {
+          "header": "Delivering to:",
+          "pincode": "122001",
+          "city": "Gurgaon",
+          "text": "122001, Gurgaon"
+        },
+        "tilted_arrow": "https://onemg.gumlet.io/marketing/345587ed-e3ac-47bc-865e-cf6923861c84.png",
+        "background_image": "https://onemg.gumlet.io/marketing/883e9fba-db14-4c47-b1d6-7105d03eafaa.png",
+        "info": [
+          {
+            "icon": "https://onemg.gumlet.io/marketing/d915abcb-8471-4d4a-a1de-17cc2e7cdb8d.png",
+            "text": "<span>Cash on delivery available</span>"
+          },
+          {
+            "icon": "https://onemg.gumlet.io/marketing/a2a0f146-583f-4b59-9f83-eb053f2972f2.png",
+            "text": "<span>Easy 7 days return available</span>"
+          }
+        ],
+        "sub_header": null
+      },
+      "ga_data": {
+        "info": {
+          "eta": 7200,
+          "epoch_eta": 1749216600,
+          "eta_variant": null,
+          "returnable": true,
+          "eta_shown": true,
+          "eta_available": true,
+          "eta_text": "Get by 7pm, Today",
+          "entity_id": "232763",
+          "entity_name": "Losatan 25mg Tablet",
+          "pincode": "122001"
+        }
+      }
+    },
+    "ad": {
+      "slot1": {
+        "banner": {
+          "data": [
+            {
+              "id": 73871,
+              "image": "https://onemg.gumlet.io/30a0e300-cf5a-46a3-b895-c0b3b70ebb81.png",
+              "hover_text": null,
+              "alt_text": "aa",
+              "on_click_link": "onemg://www.1mg.com/information/tata-1mg-weightwise-medically-supervised-doctor-led-weight-management-program?onlycontent=true&utm_source=home_page_banner",
+              "type": "banner",
+              "platform": "ios",
+              "position": 1729060004,
+              "dfp_id": null,
+              "offer_text": null,
+              "network_id": null,
+              "cluster_ids": [
+                2,
+                7,
+                1
+              ],
+              "resolution": [
+                2,
+                1
+              ],
+              "page": "drug_page",
+              "page_position": "slot1",
+              "platform_type": "dls_client",
+              "extra_fields": {},
+              "fallback_image": "https://onemg.gumlet.io/marketing/wz3uwntgmqgas0zvv0ky.png",
+              "fallback_target_url": "onemg://www.1mg.com/search"
+            }
+          ],
+          "resolution": {
+            "width": 2,
+            "height": 1
+          }
+        },
+        "ga_data": {
+          "info": {
+            "widget_id": "73871",
+            "widget_name": "banner",
+            "entity_type": "banner",
+            "is_sponsored": true
+          }
+        },
+        "mix_panel_data": {
+          "widget_id": "73871",
+          "widget_type": "banner",
+          "widget_sponsored": false,
+          "target_url": "onemg://www.1mg.com/information/tata-1mg-weightwise-medically-supervised-doctor-led-weight-management-program?onlycontent=true&utm_source=home_page_banner",
+          "unique_token": "0b233151-00b7-486b-a773-ee89a25aa63c_uUmB26_493618599_1706184973381:1749208121"
+        }
+      }
+    },
+    "whatsapp_redirection_widget": null,
+    "substitutes_rapid": null,
+    "generic_substitute_nudge": {
+      "icon": "https://onemg.gumlet.io/marketing/d61bc175-5bfe-4b15-b14e-2285d1c453d7.lottie",
+      "text": "<span style=\"color:#181A1F\">Get an </span><font color=\"#864291\"><b>alternative in 60 minutes</b></font>",
+      "bg_image": "https://onemg.gumlet.io/marketing/4e379908-f4ad-4fa3-8381-963799a3c572.png",
+      "chevron_icon": "https://onemg.gumlet.io/marketing/9e6800f9-4f5d-4b9d-ba6d-b8198ea97570.png",
+      "scroll_to": "generic_substitute"
+    },
+    "generic_substitute": {
+      "header": "Generic alternative",
+      "is_generic_substitute": true,
+      "sub_header": "available in <font color='#864291'><b>60 minutes!</b></font>",
+      "right_icon": "https://onemg.gumlet.io/marketing/8ab04196-c281-4d35-a9a4-4fdff0950f76.png",
+      "type": "generic_substitute",
+      "bg_image": "https://onemg.gumlet.io/marketing/c94e0126-28a8-4b3c-98c2-3aae373c9432.png",
+      "info_nudge": {
+        "prefix_icon": "https://onemg.gumlet.io/marketing/44bdb981-f288-4b62-9177-e5d23968f7ae.png",
+        "text": "<span style=\"color: #FFFFFF\">Contains same composition</span>",
+        "bg_image": "https://onemg.gumlet.io/marketing/7c160ecd-4444-4223-931e-448aea586934.png"
+      },
+      "sku_details": {
+        "id": "69554",
+        "name": "<b>Angizaar 25 Tablet</b>",
+        "type": "allopathy",
+        "url": "/drugs/angizaar-25-tablet-69554",
+        "label": "strip of 10 tablets",
+        "manufacturer_name": "by Micro Labs Ltd",
+        "image": "https://onemg.gumlet.io/a_ignore,w_380,h_380,c_fit,q_auto,f_auto/uau0aqwgbxe53gl46xqk.jpg",
+        "prices": {
+          "mrp": "₹39",
+          "discounted_price": "₹37.1",
+          "discount": "5% off"
+        },
+        "mix_panel_data": {
+          "widget_type": "generic_substitution",
+          "widget_name": "substitution"
+        },
+        "per_unit_price": {
+          "text": "<font color=\"#2e754a\"><b>₹3.71</b> per tablet</font>",
+          "bg_gradient": [
+            "#AEE9C8",
+            "#FFFFFF"
+          ]
+        },
+        "sale": null,
+        "cta": {
+          "text": "ADD",
+          "action": "ADD_TO_CART",
+          "details": {
+            "sku_id": "69554",
+            "quantity": 1,
+            "is_generic_substitute": true
+          }
+        },
+        "quantity_info": {
+          "min": 1,
+          "max": 20,
+          "selling_quantity": 10
+        },
+        "eta": "Get in <b><span style='color:#3B3B3B'>60 mins</span></b>",
+        "eta_info": {
+          "text": "<font color='#4E5665'>Get in </font><font color='#9D59A8'><b>60 mins</b></font>",
+          "icon": "https://onemg.gumlet.io/marketing/fdf51747-9223-4db6-ae3d-a7d6b1d5d8a0.png",
+          "left_gradient": null,
+          "right_gradient": null,
+          "linear_gradient": [
+            "#FFFFFF",
+            "#FCEAFF",
+            "#FCEAFF"
+          ]
+        },
+        "border_gradient": {
+          "start": "#864291",
+          "end": "#FFFFFF"
+        }
+      }
+    },
+    "rx_substitution_bottomsheet": {
+      "header": "Get alternate medicines <br><font color='#864291'><b>in 60 minutes</b></font>",
+      "header_image": "https://onemg.gumlet.io/marketing/5e0a9dd7-b832-4b89-95e1-01c6ec3e0f20.png",
+      "header_underline_image": "https://onemg.gumlet.io/marketing/94f9b0cc-8049-44ec-bfcf-b8531a639db3.png",
+      "divider": "#DDE2EB",
+      "grouped_skus": [
+        {
+          "switch_icon": "https://onemg.gumlet.io/marketing/967050ba-6565-44b8-8c1d-e79cce08c5ea.png",
+          "skus": [
+            {
+              "name": "Losatan 25mg Tablet",
+              "label": "strip of 10 tablets",
+              "image": "https://onemg.gumlet.io/a_ignore,w_380,h_380,c_fit,q_auto,f_auto/a07f2f05bfcf4d06b378e68ce7543e17.jpg",
+              "prices": {
+                "discounted_price": "₹34.1"
+              },
+              "manufacturer_name": "by Biochem Pharmaceutical Industries",
+              "per_unit_price": {
+                "bg_gradient": [
+                  "#DDE2EB",
+                  "#FFFFFF"
+                ],
+                "text": "<font color=\"#414752\"><b>₹3.41</b> per tablet</font>"
+              },
+              "selected": false,
+              "sku_tag": {
+                "bg_color": "#DDE2EB",
+                "text": "<font color=\"#414752\"><b>Get by 7pm, Today</b></font>"
+              },
+              "bg_color": "#FFFFFF",
+              "border_gradient_list": [
+                "#DDE2EB",
+                "#DDE2EB"
+              ]
+            },
+            {
+              "name": "Angizaar 25 Tablet",
+              "label": "strip of 10 tablets",
+              "image": "https://onemg.gumlet.io/a_ignore,w_380,h_380,c_fit,q_auto,f_auto/omgw2dayrpakiewgmrrg.jpg",
+              "prices": {
+                "discounted_price": "₹37.1"
+              },
+              "manufacturer_name": "by Micro Labs Ltd",
+              "per_unit_price": {
+                "bg_gradient": [
+                  "#AEE9C8",
+                  "#FFFFFF"
+                ],
+                "text": "<font color=\"#2e754a\"><b>₹3.71</b> per tablet</font>"
+              },
+              "selected": true,
+              "sku_tag": {
+                "icon": "https://onemg.gumlet.io/marketing/28d79acf-3d93-420c-a734-25e1170099fa.png",
+                "bg_color": "#864291",
+                "text": "<font color='#FFFFFF'><font color='#864291'><b>Get in <b><span style='color:#3B3B3B'>60 mins</span></b></b></font></font>"
+              },
+              "border_gradient_list": [
+                "#864291",
+                "#DDE2EB"
+              ],
+              "bg_color": "#FEF8FF"
+            }
+          ],
+          "footer": "<font color=\"#414752\">Contains <b>Losartan (25mg)</b></font>",
+          "divider": "#DDE2EB"
+        }
+      ],
+      "primary_cta": {
+        "text": "Switch to alternative",
+        "action": "ADD_TO_CART_SWITCH",
+        "details": {
+          "delete_skus": [
+            "232763"
+          ],
+          "add_skus": [
+            {
+              "quantity": 1,
+              "sku_id": 69554,
+              "is_generic_substitute": true
+            }
+          ]
+        }
+      },
+      "secondary_cta": {
+        "text": "Not now",
+        "action": "NOT_NOW"
+      }
+    },
+    "generic_substitute_mix_panel_data": {
+      "generic_substitution_cohort": "Test_1",
+      "sku_eligible_for_generic_substitutes": false,
+      "generic_substitution_widget_shown": true,
+      "generic_substitution_ineligibility_reason": "not_cheaper",
+      "generic_substitute_price_difference_percentage": -8,
+      "generic_substitute_sku_id": 69554,
+      "generic_substitute_mrp": 39,
+      "generic_substitute_discounted_price": 37.1,
+      "generic_substitute_eta_text": "Get in <b><span style='color:#3B3B3B'>60 mins</span></b>",
+      "generic_substitute_uid": 11.66,
+      "parent_sku_id": 232763,
+      "parent_sku_mrp": 46.3,
+      "parent_sku_discounted_price": 34.1,
+      "parent_sku_eta_text": "Get by 7pm, Today",
+      "parent_sku_uid": 22.64,
+      "generic_substitute_diff_in_uid": -10.98,
+      "generic_substitute_diff_in_uid_per_unit": -1.09
+    },
+    "payment_offers": null,
+    "fab_buttons": [
+      {
+        "name": "Substitutes",
+        "action": "ALL_SUBSTITUTES",
+        "position": 8
+      }
+    ],
+    "care_widget": {
+      "header": "<span style='color: #6E2A79;'>Payment, Returns & Expiry</span>",
+      "icon": null,
+      "bg_gradient": {
+        "start_color": "#FCEAFF",
+        "end_color": "#FFFFFF"
+      },
+      "items_border_color": "#FCEAFF",
+      "items": [
+        {
+          "icon": "https://onemg.gumlet.io/marketing/89d04680-f98c-456e-b3bb-5467104209de.png",
+          "header": "Cash on delivery available",
+          "sub_header": "Get your product first, then pay us once you're sure about your order"
+        },
+        {
+          "icon": "https://onemg.gumlet.io/marketing/bec3924d-5541-4309-8a9a-18c0bb287b81.png",
+          "header": "7 day free return",
+          "sub_header": "Easily return the product if you don't need it anymore"
+        },
+        {
+          "icon": "https://onemg.gumlet.io/marketing/9c483143-59d6-4709-b307-9f5825eaa870.png",
+          "header": "Product expires after Oct, 2026",
+          "sub_header": "We only stock items that keep their quality over time."
+        }
+      ]
+    },
+    "is_vsat": true,
+    "schema": {
+      "drug": {
+        "relevantSpecialty": {
+          "@type": "MedicalSpecialty",
+          "name": "Cardiologists"
+        }
+      }
+    }
+  },
+  "partial_complete": false,
+  "is_success": true,
+  "status_code": 200
+}
