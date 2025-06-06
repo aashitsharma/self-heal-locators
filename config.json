@@ -1,3 +1,9 @@
 {
-  "spring.data.mongodb.uri": "mongodb://analytics:qaautomation1mg@52.66.130.251:5729/analytics_data_dump"
+  "spring.data.mongodb.uri": "mongodb://analytics:qaautomation1mg@52.66.130.251:5729/analytics_data_dump",
+  "logging.level.org.springframework": "DEBUG",
+  "logging.level.root": "DEBUG",
+  "mock.data.object": {},
+  "server.port": 8980,
+  "vault.host": "",
+  "vault.token": ""
 }
