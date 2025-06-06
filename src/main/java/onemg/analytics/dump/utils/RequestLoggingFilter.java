@@ -31,7 +31,7 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
             int status = response.getStatus();
             String path = request.getRequestURI();
             if(!path.equalsIgnoreCase("/actuator/health"))
-                LOGGER.info("Status : "+status+" | Duration : "+duration+" ms | API : "+request.getMethod()+" : "+path + " | Query Params : "+request.getQueryString()+" | Headers : "+request.getHeaderNames());
+                LOGGER.info("Status : "+status+" | Duration : "+duration+" ms | API : "+request.getMethod()+" - "+path + " | Query Params : "+request.getQueryString()+" | Headers : "+CommonUtility.joinEnumeration(request.getHeaderNames()));
             // Clear MDC after the request completes
             MDC.remove(REFERENCE_KEY);
         }

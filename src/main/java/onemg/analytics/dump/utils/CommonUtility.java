@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
 
 import java.io.InputStream;
+import java.util.Enumeration;
 import java.util.Map;
 
 
@@ -28,6 +29,23 @@ public class CommonUtility {
         } catch (Exception e) {
             throw new RuntimeException("Failed to read JSON file", e);
         }
+    }
+
+    /**
+     *
+     * @param enumeration : Required to extract headers
+     * @return
+     */
+    public static String joinEnumeration(Enumeration<String> enumeration) {
+        StringBuilder sb = new StringBuilder();
+
+        while (enumeration.hasMoreElements()) {
+            sb.append(enumeration.nextElement());
+            if (enumeration.hasMoreElements()) {
+                sb.append(", ");
+            }
+        }
+        return sb.toString();
     }
 
 }
