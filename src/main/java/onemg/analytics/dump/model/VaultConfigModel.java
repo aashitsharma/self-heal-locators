@@ -1,34 +1,82 @@
 package onemg.analytics.dump.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class VaultConfigModel {
-    private String request_id;
-    private String lease_id;
-    private boolean renewable;
-    private int lease_duration;
-    private VaultData data;
-    private Object wrap_info;
-    private Object warnings;
-    private Object auth;
-    private String vault_request_id;
+    @JsonProperty("request_id")
+    private String requestId;
 
-    @Data
+    @JsonProperty("lease_id")
+    private String leaseId;
+
+    @JsonProperty("renewable")
+    private boolean renewable;
+
+    @JsonProperty("lease_duration")
+    private int leaseDuration;
+
+    @JsonProperty("data")
+    private DataWrapper data;
+
+    @JsonProperty("vault_request_id")
+    private String vaultRequestId;
+
+
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public static class VaultData {
-        private Object data; // or use Map<String, Object> if dynamic
+    public static class DataWrapper {
+        @JsonProperty("data")
+        private Data data;
+
+        @JsonProperty("metadata")
         private Metadata metadata;
+
     }
 
-    @Data
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class Data {
+        @JsonProperty("api")
+        private Object api;
+
+        @JsonProperty("app")
+        private Object app;
+
+        @JsonProperty("cloud_config")
+        private Object cloudConfig;
+
+        @JsonProperty("database")
+        private Object database;
+
+        @JsonProperty("execution_details")
+        private Object executionDetails;
+
+        @JsonProperty("email")
+        private Object email;
+
+        @JsonProperty("config")
+        private Object config;
+
+        @JsonProperty("test_data")
+        private Object testData;
+
+    }
+
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Metadata {
-        private String created_time;
-        private String deletion_time;
+        @JsonProperty("created_time")
+        private String createdTime;
+
+        @JsonProperty("deletion_time")
+        private String deletionTime;
+
+        @JsonProperty("destroyed")
         private boolean destroyed;
+
+        @JsonProperty("version")
         private int version;
+
     }
 }

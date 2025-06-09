@@ -58,8 +58,8 @@ public class VaultConfigController {
             );
             if(response.getStatusCode()== HttpStatusCode.valueOf(200)){
                 model = response.getBody();
-                model.setVault_request_id(model.getRequest_id());
-                model.setRequest_id((String) MDC.get("reference"));
+                model.setVaultRequestId(model.getRequestId());
+                model.setRequestId((String) MDC.get("reference"));
                 LOGGER.info(" Status Code : "+response.getStatusCode() +" | API : "+downstreamUrl);
                 return new ResponseEntity<>(model, responseHeaders, response.getStatusCode());
 
