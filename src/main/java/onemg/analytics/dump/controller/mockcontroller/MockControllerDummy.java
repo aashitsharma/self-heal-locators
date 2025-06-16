@@ -4,8 +4,11 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import jakarta.servlet.http.HttpServletRequest;
 import onemg.analytics.dump.JsonConfig;
 import onemg.analytics.dump.model.ErrorModel;
+import onemg.analytics.dump.model.MockDataModel;
+import onemg.analytics.dump.repository.MockDataRepository;
 import onemg.analytics.dump.utils.CommonUtility;
 import org.apache.tomcat.util.json.JSONParser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1/mockdummy")
@@ -23,6 +27,9 @@ public class MockControllerDummy {
 
     private final RestTemplate restTemplate = new RestTemplate();
     private final String downstreamBaseUrl = JsonConfig.config.getVaultHost();
+    private final String vertical = "mock_dummy";
+    @Autowired
+    private MockDataRepository mockDataRepository;
 
     @GetMapping("/mocked-endpoint")
     public ResponseEntity<?> getMockedResponse(HttpServletRequest request, HttpEntity<String> entity, @RequestParam(required = false) String mock) {
@@ -42,6 +49,14 @@ public class MockControllerDummy {
     // Catch-all only within /v1/**
     @RequestMapping("/**")
     public ResponseEntity<?> redirection(HttpServletRequest request, HttpEntity<String> entity){
+        String fullPath = request.getRequestURI(); // like /v1/example/data
+        String subPath = fullPath.substring(request.getContextPath().length());
+        HttpMethod method = HttpMethod.valueOf(request.getMethod());
+        Optional<MockDataModel> mockedData = mockDataRepository.findByUriAndVerticalAndMethod(subPath, vertical, method);
+        if (mockedData.isPresent()) {
+            Map<String, Object> mockedResponse = mockedData.get().getResponse();
+            return ResponseEntity.status(mockedData.get().getResponseCode()).contentType(MediaType.APPLICATION_JSON).body(mockedResponse);
+        }
         return proxyUnmatchedRequests(request,entity);
     }
 

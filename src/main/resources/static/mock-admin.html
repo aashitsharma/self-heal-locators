@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mock Admin Dashboard</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        select, input, textarea, button { margin: 5px 0; width: 100%; padding: 8px; }
+        textarea { height: 120px; font-family: monospace; }
+        .container { max-width: 600px; margin: auto; }
+        .result { white-space: pre-wrap; background: #f2f2f2; padding: 10px; margin-top: 10px; border: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Mock Data Admin Panel</h2>
+
+    <label for="uri">URI</label>
+    <input type="text" id="uri" placeholder="/v1/product/details">
+
+    <label for="vertical">Vertical</label>
+    <select id="vertical">
+        <option value="pharmacy">Pharmacy</option>
+        <option value="lab">Lab</option>
+        <option value="healthcare">Healthcare</option>
+    </select>
+
+    <label for="method">HTTP Method</label>
+    <select id="method">
+        <option value="GET">GET</option>
+        <option value="POST">POST</option>
+        <option value="PUT">PUT</option>
+        <option value="DELETE">DELETE</option>
+    </select>
+
+    <label for="responseCode">Response Code</label>
+    <select id="responseCode">
+        <option value="200">200</option>
+        <option value="201">201</option>
+        <option value="400">400</option>
+        <option value="404">404</option>
+        <option value="500">500</option>
+    </select>
+
+    <label for="response">Response (JSON)</label>
+    <textarea id="response" placeholder='{ "message": "Mock response" }'></textarea>
+
+    <button onclick="createMock()">Create</button>
+    <button onclick="updateMock()">Update</button>
+    <button onclick="fetchMock()">Fetch</button>
+    <button onclick="deleteMock()">Delete</button>
+
+    <div class="result" id="result">
+        <table id="resultTable" border="1" style="width:100%; border-collapse: collapse; display: none;">
+            <thead>
+            <tr>
+                <th>URI</th>
+                <th>Vertical</th>
+                <th>Method</th>
+                <th>Response Code</th>
+                <th>Response</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    const baseUrl = '/admin/mock-data';
+
+    function getPayload() {
+        let uri = document.getElementById('uri').value.trim();
+        let vertical = document.getElementById('vertical').value;
+        let method = document.getElementById('method').value;
+        let responseCode = parseInt(document.getElementById('responseCode').value);
+        let responseStr = document.getElementById('response').value;
+
+        let parsedResponse;
+        try {
+            parsedResponse = JSON.parse(responseStr);
+        } catch (e) {
+            alert('Invalid JSON in response field.');
+            throw e;
+        }
+
+        return {
+            uri, vertical, method, responseCode, response: parsedResponse
+        };
+    }
+
+    function createMock() {
+        let payload = getPayload();
+        fetch(baseUrl + '/create', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        }).then(res => res.json()).then(showResult);
+    }
+
+    function updateMock() {
+        let payload = getPayload();
+        fetch(baseUrl + '/update', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        }).then(res => res.json()).then(showResult);
+    }
+
+    function fetchMock() {
+    const uri = encodeURIComponent(document.getElementById('uri').value);
+    const vertical = encodeURIComponent(document.getElementById('vertical').value);
+    const method = encodeURIComponent(document.getElementById('method').value);
+    fetch(`${baseUrl}/fetch?uri=${uri}&vertical=${vertical}&method=${method}`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.uri) {
+                showTable([data]);  // Ensure it's in array form
+            } else {
+                document.getElementById('resultTable').style.display = 'none';
+                showResult(data);
+            }
+        });
+    }
+
+    function showTable(dataArray) {
+    const tbody = document.querySelector("#resultTable tbody");
+    tbody.innerHTML = "";
+    dataArray.forEach(entry => {
+        let tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${entry.uri}</td>
+            <td>${entry.vertical}</td>
+            <td>${entry.method}</td>
+            <td>${entry.responseCode}</td>
+            <td><pre>${JSON.stringify(entry.response, null, 2)}</pre></td>
+        `;
+        tbody.appendChild(tr);
+    });
+    document.getElementById("resultTable").style.display = "table";
+    }
+
+
+    function deleteMock() {
+        const uri = encodeURIComponent(document.getElementById('uri').value);
+        const vertical = encodeURIComponent(document.getElementById('vertical').value);
+        const method = encodeURIComponent(document.getElementById('method').value);
+        fetch(`${baseUrl}/delete?uri=${uri}&vertical=${vertical}&method=${method}`, {
+            method: 'DELETE'
+        }).then(res => res.json()).then(showResult);
+    }
+
+    function showResult(data) {
+        document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+    }
+</script>
+</body>
+</html>
