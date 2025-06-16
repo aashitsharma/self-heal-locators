@@ -7,6 +7,7 @@ import onemg.analytics.dump.model.ErrorModel;
 import onemg.analytics.dump.model.MockDataModel;
 import onemg.analytics.dump.repository.MockDataRepository;
 import onemg.analytics.dump.utils.CommonUtility;
+import org.apache.log4j.Logger;
 import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -24,6 +25,7 @@ import java.util.Optional;
 @RequestMapping("/v1/mockdummy")
 public class MockControllerDummy {
 
+    private static final Logger LOGGER = Logger.getLogger(MockControllerDummy.class);
 
     private final RestTemplate restTemplate = new RestTemplate();
     private final String downstreamBaseUrl = JsonConfig.config.getVaultHost();
@@ -52,6 +54,7 @@ public class MockControllerDummy {
         String fullPath = request.getRequestURI(); // like /v1/example/data
         String subPath = fullPath.substring(request.getContextPath().length());
         HttpMethod method = HttpMethod.valueOf(request.getMethod());
+        LOGGER.info("Full Path is : "+fullPath+" | Sub Path : "+subPath+" | Method : "+method+" | Vertical : "+vertical);
         Optional<MockDataModel> mockedData = mockDataRepository.findByUriAndVerticalAndMethod(subPath, vertical, method);
         if (mockedData.isPresent()) {
             Map<String, Object> mockedResponse = mockedData.get().getResponse();
