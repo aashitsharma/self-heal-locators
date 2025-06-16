@@ -63,7 +63,7 @@ public class MockAdminController
             @RequestParam String uri,
             @RequestParam HttpMethod method
     ) {
-        Optional<MockDataModel> optionalMock = mockDataRepository.findByUriAndVerticalAndMethod(uri, vertical, method);
+        Optional<MockDataModel> optionalMock = mockDataRepository.findByUriAndVerticalAndMethod(uri, vertical, method.name());
 
         if (optionalMock.isPresent()) {
             return ResponseEntity.ok(optionalMock.get());
@@ -78,7 +78,7 @@ public class MockAdminController
             @RequestParam String uri,
             @RequestParam HttpMethod method
     ) {
-        Optional<MockDataModel> existing = mockDataRepository.findByUriAndVerticalAndMethod(uri, vertical, method);
+        Optional<MockDataModel> existing = mockDataRepository.findByUriAndVerticalAndMethod(uri, vertical, method.name());
 
         if (existing.isPresent()) {
             mockDataRepository.delete(existing.get());

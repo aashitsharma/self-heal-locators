@@ -24,5 +24,5 @@ public class MockDataModel {
     private Map<String, Object> response;
     private String vertical;
     private int responseCode;
-    private HttpMethod method;
+    private String method;
 }

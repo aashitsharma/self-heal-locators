@@ -7,6 +7,6 @@ import org.springframework.http.HttpMethod;
 import java.util.Optional;
 
 public interface MockDataRepository extends MongoRepository<MockDataModel,String> {
-    Optional<MockDataModel> findByUriAndVerticalAndMethod(String uri, String vertical, HttpMethod method);
+    Optional<MockDataModel> findByUriAndVerticalAndMethod(String uri, String vertical, String method);
 
 }

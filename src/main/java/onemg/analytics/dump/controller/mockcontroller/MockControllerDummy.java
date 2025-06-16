@@ -55,7 +55,7 @@ public class MockControllerDummy {
         String subPath = fullPath.substring(request.getContextPath().length());
         HttpMethod method = HttpMethod.valueOf(request.getMethod());
         LOGGER.info("Full Path is : "+fullPath+" | Sub Path : "+subPath+" | Method : "+method+" | Vertical : "+vertical);
-        Optional<MockDataModel> mockedData = mockDataRepository.findByUriAndVerticalAndMethod(subPath, vertical, method);
+        Optional<MockDataModel> mockedData = mockDataRepository.findByUriAndVerticalAndMethod(subPath, vertical, method.name());
         if (mockedData.isPresent()) {
             Map<String, Object> mockedResponse = mockedData.get().getResponse();
             return ResponseEntity.status(mockedData.get().getResponseCode()).contentType(MediaType.APPLICATION_JSON).body(mockedResponse);
