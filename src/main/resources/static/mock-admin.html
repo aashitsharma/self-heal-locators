@@ -1,58 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Mock Admin Dashboard</title>
     <style>
-        body { font-family: Arial; margin: 20px; }
-        select, input, textarea, button { margin: 5px 0; width: 100%; padding: 8px; }
-        textarea { height: 120px; font-family: monospace; }
-        .container { max-width: 600px; margin: auto; }
-        .result { white-space: pre-wrap; background: #f2f2f2; padding: 10px; margin-top: 10px; border: 1px solid #ccc; }
+        body {
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          background-color: #f7f9fc;
+          margin: 0;
+          padding: 30px;
+        }
+
+        .container {
+          max-width: 1000px;
+          margin: auto;
+          background: #ffffff;
+          padding: 30px;
+          border-radius: 12px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+          text-align: center;
+          margin-bottom: 30px;
+          color: #333;
+        }
+
+        .form-section {
+          display: flex;
+          gap: 40px;
+          flex-wrap: wrap;
+        }
+
+        .left-form {
+          flex: 1;
+          min-width: 300px;
+        }
+
+        .right-buttons {
+          flex: 0.6;
+          min-width: 200px;
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+          justify-content: flex-start;
+          padding-left: 30px;
+          border-left: 2px solid #eee;
+        }
+
+        label {
+          display: block;
+          margin-top: 10px;
+          font-weight: 600;
+          color: #444;
+        }
+
+        input, select, textarea {
+          width: 100%;
+          padding: 10px;
+          margin-top: 4px;
+          margin-bottom: 16px;
+          border-radius: 6px;
+          border: 1px solid #ccc;
+          font-size: 14px;
+        }
+
+        textarea {
+          font-family: monospace;
+          resize: vertical;
+          height: 120px;
+        }
+
+        .right-buttons button {
+          padding: 12px;
+          color: white;
+          font-size: 14px;
+          font-weight: 600;
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        }
+
+        .btn-create    { background-color: #28a745; }   /* Green */
+        .btn-update    { background-color: #ffc107; color: #212529; } /* Yellow */
+        .btn-fetch     { background-color: #007bff; }
+        .btn-delete    { background-color: #dc3545; }
+
+        .btn-create:hover  { background-color: #218838; }
+        .btn-update:hover  { background-color: #e0a800; }
+        .btn-fetch:hover   { background-color: #0056b3; }
+        .btn-delete:hover  { background-color: #c82333; }
+
+        .divider {
+          margin: 30px 0;
+          border-top: 1px solid #ddd;
+        }
+
+        .result {
+          background: #f1f3f5;
+          padding: 20px;
+          border-radius: 8px;
+          border: 1px solid #ccc;
+        }
+
+        .result pre {
+          white-space: pre-wrap;
+          word-break: break-word;
+          font-family: monospace;
+        }
+
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-top: 15px;
+        }
+
+        th, td {
+          padding: 12px;
+          border: 1px solid #ccc;
+          text-align: left;
+          vertical-align: top;
+        }
+
+        th {
+          background-color: #e9ecef;
+        }
+
+        @media screen and (max-width: 768px) {
+          .form-section {
+            flex-direction: column;
+          }
+          .right-buttons {
+            border-left: none;
+            padding-left: 0;
+          }
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <h2>Mock Data Admin Panel</h2>
 
-    <label for="uri">URI</label>
-    <input type="text" id="uri" placeholder="/v1/product/details">
+    <div class="form-section">
+        <div class="left-form">
+            <label for="uri">URI</label>
+            <input type="text" id="uri" placeholder="/v1/product/details" />
 
-    <label for="vertical">Vertical</label>
-    <select id="vertical">
-        <option value="pharmacy">Pharmacy</option>
-        <option value="lab">Lab</option>
-        <option value="healthcare">Healthcare</option>
-    </select>
+            <label for="vertical">Vertical</label>
+            <select id="vertical">
+                <option value="pharmacy">Pharmacy</option>
+                <option value="lab">Lab</option>
+                <option value="healthcare">Healthcare</option>
+            </select>
 
-    <label for="method">HTTP Method</label>
-    <select id="method">
-        <option value="GET">GET</option>
-        <option value="POST">POST</option>
-        <option value="PUT">PUT</option>
-        <option value="DELETE">DELETE</option>
-    </select>
+            <label for="method">HTTP Method</label>
+            <select id="method">
+                <option value="GET">GET</option>
+                <option value="POST">POST</option>
+                <option value="PUT">PUT</option>
+                <option value="DELETE">DELETE</option>
+            </select>
 
-    <label for="responseCode">Response Code</label>
-    <select id="responseCode">
-        <option value="200">200</option>
-        <option value="201">201</option>
-        <option value="400">400</option>
-        <option value="404">404</option>
-        <option value="500">500</option>
-    </select>
+            <label for="responseCode">Response Code</label>
+            <select id="responseCode">
+                <option value="200">200</option>
+                <option value="201">201</option>
+                <option value="400">400</option>
+                <option value="404">404</option>
+                <option value="500">500</option>
+            </select>
 
-    <label for="response">Response (JSON)</label>
-    <textarea id="response" placeholder='{ "message": "Mock response" }'></textarea>
+            <label for="response">Response (JSON)</label>
+            <textarea id="response" placeholder='{ "message": "Mock response" }'></textarea>
+        </div>
 
-    <button onclick="createMock()">Create</button>
-    <button onclick="updateMock()">Update</button>
-    <button onclick="fetchMock()">Fetch</button>
-    <button onclick="deleteMock()">Delete</button>
+        <div class="right-buttons">
+            <button class="btn-create" onclick="createMock()">Create</button>
+            <button class="btn-update" onclick="updateMock()">Update</button>
+            <button class="btn-fetch" onclick="fetchMock()">Fetch</button>
+            <button class="btn-delete" onclick="deleteMock()">Delete</button>
+        </div>
+    </div>
+
+    <div class="divider"></div>
 
     <div class="result" id="result">
         <div id="jsonOutput"></div>
-        <table id="resultTable" border="1" style="width:100%; border-collapse: collapse; display: none;">
+        <table id="resultTable" style="display: none;">
             <thead>
             <tr>
                 <th>URI</th>
@@ -71,89 +206,86 @@
     const baseUrl = '/analytics_event_dump/admin/mock-data';
 
     function getPayload() {
-        let uri = document.getElementById('uri').value.trim();
-        let vertical = document.getElementById('vertical').value;
-        let method = document.getElementById('method').value;
-        let responseCode = parseInt(document.getElementById('responseCode').value);
-        let responseStr = document.getElementById('response').value;
+      let uri = document.getElementById('uri').value.trim();
+      let vertical = document.getElementById('vertical').value;
+      let method = document.getElementById('method').value;
+      let responseCode = parseInt(document.getElementById('responseCode').value);
+      let responseStr = document.getElementById('response').value;
 
-        let parsedResponse;
-        try {
-            parsedResponse = JSON.parse(responseStr);
-        } catch (e) {
-            alert('Invalid JSON in response field.');
-            throw e;
-        }
+      let parsedResponse;
+      try {
+        parsedResponse = JSON.parse(responseStr);
+      } catch (e) {
+        alert('Invalid JSON in response field.');
+        throw e;
+      }
 
-        return {
-            uri, vertical, method, responseCode, response: parsedResponse
-        };
+      return { uri, vertical, method, responseCode, response: parsedResponse };
     }
 
     function createMock() {
-        let payload = getPayload();
-        fetch(baseUrl + '/create', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        }).then(res => res.json()).then(showResult);
+      let payload = getPayload();
+      fetch(baseUrl + '/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(res => res.json()).then(showResult);
     }
 
     function updateMock() {
-        let payload = getPayload();
-        fetch(baseUrl + '/update', {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        }).then(res => res.json()).then(showResult);
+      let payload = getPayload();
+      fetch(baseUrl + '/update', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(res => res.json()).then(showResult);
     }
 
     function fetchMock() {
-    const uri = encodeURIComponent(document.getElementById('uri').value);
-    const vertical = encodeURIComponent(document.getElementById('vertical').value);
-    const method = encodeURIComponent(document.getElementById('method').value);
-    fetch(`${baseUrl}/fetch?uri=${uri}&vertical=${vertical}&method=${method}`)
+      const uri = encodeURIComponent(document.getElementById('uri').value);
+      const vertical = encodeURIComponent(document.getElementById('vertical').value);
+      const method = encodeURIComponent(document.getElementById('method').value);
+      fetch(`${baseUrl}/fetch?uri=${uri}&vertical=${vertical}&method=${method}`)
         .then(res => res.json())
         .then(data => {
-            if (data.uri) {
-                showTable([data]);  // Ensure it's in array form
-            } else {
-                document.getElementById('resultTable').style.display = 'none';
-                showResult(data);
-            }
+          if (data.uri) {
+            showTable([data]);
+          } else {
+            document.getElementById('resultTable').style.display = 'none';
+            showResult(data);
+          }
         });
     }
 
-    function showTable(dataArray) {
-    const tbody = document.querySelector("#resultTable tbody");
-    tbody.innerHTML = "";
-    dataArray.forEach(entry => {
-        let tr = document.createElement("tr");
-        tr.innerHTML = `
-            <td>${entry.uri}</td>
-            <td>${entry.vertical}</td>
-            <td>${entry.method}</td>
-            <td>${entry.responseCode}</td>
-            <td><pre>${JSON.stringify(entry.response, null, 2)}</pre></td>
-        `;
-        tbody.appendChild(tr);
-    });
-    document.getElementById("resultTable").style.display = "table";
-    }
-
-
     function deleteMock() {
-        const uri = encodeURIComponent(document.getElementById('uri').value);
-        const vertical = encodeURIComponent(document.getElementById('vertical').value);
-        const method = encodeURIComponent(document.getElementById('method').value);
-        fetch(`${baseUrl}/delete?uri=${uri}&vertical=${vertical}&method=${method}`, {
-            method: 'DELETE'
-        }).then(res => res.json()).then(showResult);
+      const uri = encodeURIComponent(document.getElementById('uri').value);
+      const vertical = encodeURIComponent(document.getElementById('vertical').value);
+      const method = encodeURIComponent(document.getElementById('method').value);
+      fetch(`${baseUrl}/delete?uri=${uri}&vertical=${vertical}&method=${method}`, {
+        method: 'DELETE'
+      }).then(res => res.json()).then(showResult);
     }
 
     function showResult(data) {
-    document.getElementById('jsonOutput').innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
-    document.getElementById("resultTable").style.display = "none";
+      document.getElementById('jsonOutput').innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+      document.getElementById("resultTable").style.display = "none";
+    }
+
+    function showTable(dataArray) {
+      const tbody = document.querySelector("#resultTable tbody");
+      tbody.innerHTML = "";
+      dataArray.forEach(entry => {
+        let tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${entry.uri}</td>
+          <td>${entry.vertical}</td>
+          <td>${entry.method}</td>
+          <td>${entry.responseCode}</td>
+          <td><pre>${JSON.stringify(entry.response, null, 2)}</pre></td>
+        `;
+        tbody.appendChild(tr);
+      });
+      document.getElementById("resultTable").style.display = "table";
     }
 </script>
 </body>
