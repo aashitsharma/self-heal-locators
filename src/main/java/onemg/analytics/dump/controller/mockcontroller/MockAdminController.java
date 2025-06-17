@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -63,11 +65,25 @@ public class MockAdminController
             @RequestParam String uri,
             @RequestParam HttpMethod method
     ) {
-        Optional<MockDataModel> optionalMock = mockDataRepository.findByUriAndVerticalAndMethod(uri, vertical, method.name());
+        Optional<MockDataModel> optionalMock = null;
+        List<MockDataModel> mockList = new ArrayList<>();
+        if( null!=method && uri.isEmpty() || uri.isBlank()){
+            mockList = mockDataRepository.findByVertical(vertical);
+        }
+        else if(uri.isEmpty() || uri.isBlank()){
+            mockList = mockDataRepository.findByVerticalAndMethod(vertical,method.name());
+        }
+        else {
+            optionalMock = mockDataRepository.findByUriAndVerticalAndMethod(uri, vertical, method.name());
 
-        if (optionalMock.isPresent()) {
+        }
+
+        if ( null!=optionalMock &&optionalMock.isPresent()) {
             return ResponseEntity.ok(optionalMock.get());
-        } else {
+        }
+        else if(!mockList.isEmpty()){
+            return ResponseEntity.ok(mockList);
+        }else {
             return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.NOT_FOUND.value(),"Mock data not found."), HttpStatusCode.valueOf(HttpStatus.NOT_FOUND.value()));
         }
     }

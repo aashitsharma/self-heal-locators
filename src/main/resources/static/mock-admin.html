@@ -127,6 +127,13 @@
           background-color: #e9ecef;
         }
 
+        td pre {
+          max-height: 100px;
+          overflow: auto;
+          white-space: pre-wrap;
+          word-break: break-word;
+        }
+
         @media screen and (max-width: 768px) {
           .form-section {
             flex-direction: column;
@@ -186,6 +193,11 @@
     <div class="divider"></div>
 
     <div class="result" id="result">
+        <div id="pagination" style="margin-top: 10px; text-align: center;">
+            <button onclick="prevPage()">Previous</button>
+            <span id="pageIndicator" style="margin: 0 10px;"></span>
+            <button onclick="nextPage()">Next</button>
+        </div>
         <div id="jsonOutput"></div>
         <table id="resultTable" style="display: none;">
             <thead>
@@ -241,21 +253,65 @@
       }).then(res => res.json()).then(showResult);
     }
 
-    function fetchMock() {
-      const uri = encodeURIComponent(document.getElementById('uri').value);
-      const vertical = encodeURIComponent(document.getElementById('vertical').value);
-      const method = encodeURIComponent(document.getElementById('method').value);
-      fetch(`${baseUrl}/fetch?uri=${uri}&vertical=${vertical}&method=${method}`)
-        .then(res => res.json())
-        .then(data => {
-          if (data.uri) {
-            showTable([data]);
-          } else {
-            document.getElementById('resultTable').style.display = 'none';
-            showResult(data);
-          }
-        });
+    let currentPage = 1;
+    const rowsPerPage = 20;
+    let fetchedData = [];
+
+function fetchMock() {
+  const uri = encodeURIComponent(document.getElementById('uri').value);
+  const vertical = encodeURIComponent(document.getElementById('vertical').value);
+  const method = encodeURIComponent(document.getElementById('method').value);
+  fetch(`${baseUrl}/fetch-all?uri=${uri}&vertical=${vertical}&method=${method}`)
+  .then(res => res.json())
+  .then(data => {
+    if (Array.isArray(data)) {
+      fetchedData = data;
+    } else if (data && typeof data === 'object') {
+      fetchedData = [data];  // wrap single object into array
+    } else {
+      fetchedData = [];
     }
+    currentPage = 1;
+    showTablePage();
+  });
+}
+
+function showTablePage() {
+  const start = (currentPage - 1) * rowsPerPage;
+  const end = start + rowsPerPage;
+  const pageData = fetchedData.slice(start, end);
+
+  const tbody = document.querySelector("#resultTable tbody");
+  tbody.innerHTML = "";
+  pageData.forEach(entry => {
+    let tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${entry.uri}</td>
+      <td>${entry.vertical}</td>
+      <td>${entry.method}</td>
+      <td>${entry.responseCode}</td>
+      <td><pre>${JSON.stringify(entry.response, null, 2)}</pre></td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  document.getElementById("resultTable").style.display = "table";
+  document.getElementById("pageIndicator").textContent = `Page ${currentPage} of ${Math.ceil(fetchedData.length / rowsPerPage)}`;
+}
+
+function nextPage() {
+  if (currentPage * rowsPerPage < fetchedData.length) {
+    currentPage++;
+    showTablePage();
+  }
+}
+
+function prevPage() {
+  if (currentPage > 1) {
+    currentPage--;
+    showTablePage();
+  }
+}
 
     function deleteMock() {
       const uri = encodeURIComponent(document.getElementById('uri').value);
