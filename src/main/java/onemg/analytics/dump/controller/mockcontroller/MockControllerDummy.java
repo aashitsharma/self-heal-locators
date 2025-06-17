@@ -29,7 +29,7 @@ public class MockControllerDummy {
 
     private final RestTemplate restTemplate = new RestTemplate();
     private final String downstreamBaseUrl = JsonConfig.config.getVaultHost();
-    private final String vertical = "mock_dummy";
+    private final String vertical = "pharmacy";
     @Autowired
     private MockDataRepository mockDataRepository;
 
