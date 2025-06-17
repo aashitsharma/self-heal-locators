@@ -152,14 +152,8 @@
     }
 
     function showResult(data) {
-    const resultDiv = document.getElementById('result');
-    const table = document.getElementById('resultTable');
-
-    // Hide table if not a valid fetch result
-    table.style.display = "none";
-
-    // Show raw response
-    resultDiv.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+    document.getElementById('jsonOutput').innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+    document.getElementById("resultTable").style.display = "none";
     }
 </script>
 </body>
