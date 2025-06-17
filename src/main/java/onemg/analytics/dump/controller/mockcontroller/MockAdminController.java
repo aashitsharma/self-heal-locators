@@ -28,7 +28,7 @@ public class MockAdminController
     @PostMapping("/create")
     public ResponseEntity<?> createMock(@RequestBody MockDataModel request) {
         Optional<MockDataModel> existing = mockDataRepository.findByUriAndVerticalAndMethod(
-                request.getUri(), request.getVertical(), request.getMethod());
+                request.getUri().trim(), request.getVertical().trim(), request.getMethod());
 
         if (existing.isPresent()) {
             return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.CONFLICT.value(),"Mock data already exists for this combination."), HttpStatusCode.valueOf(HttpStatus.CONFLICT.value()));
@@ -43,7 +43,7 @@ public class MockAdminController
     @PutMapping("/update")
     public ResponseEntity<?> updateMock(@RequestBody MockDataModel request) {
         Optional<MockDataModel> existing = mockDataRepository.findByUriAndVerticalAndMethod(
-                request.getUri(), request.getVertical(), request.getMethod());
+                request.getUri().trim(), request.getVertical().trim(), request.getMethod());
 
         if (existing.isEmpty()) {
             return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.NOT_FOUND.value(),"Mock data not found for update."), HttpStatusCode.valueOf(HttpStatus.NOT_FOUND.value()));
@@ -68,13 +68,13 @@ public class MockAdminController
         Optional<MockDataModel> optionalMock = null;
         List<MockDataModel> mockList = new ArrayList<>();
         if( null!=method && uri.isEmpty() || uri.isBlank()){
-            mockList = mockDataRepository.findByVertical(vertical);
+            mockList = mockDataRepository.findByVertical(vertical.trim());
         }
         else if(uri.isEmpty() || uri.isBlank()){
-            mockList = mockDataRepository.findByVerticalAndMethod(vertical,method.name());
+            mockList = mockDataRepository.findByVerticalAndMethod(vertical.trim(),method.name());
         }
         else {
-            optionalMock = mockDataRepository.findByUriAndVerticalAndMethod(uri, vertical, method.name());
+            optionalMock = mockDataRepository.findByUriAndVerticalAndMethod(uri.trim(), vertical.trim(), method.name());
 
         }
 
@@ -94,7 +94,7 @@ public class MockAdminController
             @RequestParam String uri,
             @RequestParam HttpMethod method
     ) {
-        Optional<MockDataModel> existing = mockDataRepository.findByUriAndVerticalAndMethod(uri, vertical, method.name());
+        Optional<MockDataModel> existing = mockDataRepository.findByUriAndVerticalAndMethod(uri.trim(), vertical.trim(), method.name());
 
         if (existing.isPresent()) {
             mockDataRepository.delete(existing.get());
@@ -106,7 +106,7 @@ public class MockAdminController
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteMockDataById(@PathVariable("id")String dataId){
-        Optional<MockDataModel> data = mockDataRepository.findById(dataId);
+        Optional<MockDataModel> data = mockDataRepository.findById(dataId.trim());
 
         if(data.isPresent()){
             mockDataRepository.delete(data.get());
