@@ -32,4 +32,11 @@ public interface MockDataRepository extends MongoRepository<MockDataModel,String
      */
     List<MockDataModel> findByVertical(String vertical);
 
+    /**
+     *
+     * @param id
+     * @return
+     */
+    Optional<MockDataModel> findById(String id);
+
 }

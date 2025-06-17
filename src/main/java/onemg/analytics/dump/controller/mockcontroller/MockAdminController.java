@@ -104,6 +104,21 @@ public class MockAdminController
         }
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteMockDataById(@PathVariable("id")String dataId){
+        Optional<MockDataModel> data = mockDataRepository.findById(dataId);
+
+        if(data.isPresent()){
+            mockDataRepository.delete(data.get());
+            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.OK.value(),"Mock data deleted successfully."), HttpStatusCode.valueOf(HttpStatus.OK.value()));
+
+        }
+        else {
+            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.NOT_FOUND.value(),"Mock data not found."), HttpStatusCode.valueOf(HttpStatus.NOT_FOUND.value()));
+        }
+        //68505f45acebfe6efb5f0172
+    }
+
     // 🔸 Reusable mapper
     private MockDataModel toModel(MockDataModel req) {
         MockDataModel model = new MockDataModel();
