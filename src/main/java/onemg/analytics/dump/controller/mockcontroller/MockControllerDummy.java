@@ -51,10 +51,9 @@ public class MockControllerDummy {
     // Catch-all only within /v1/**
     @RequestMapping("/**")
     public ResponseEntity<?> redirection(HttpServletRequest request, HttpEntity<String> entity){
-        String fullPath = request.getRequestURI(); // like /v1/example/data
-        String subPath = fullPath.substring(request.getContextPath().length());
+        String subPath = request.getRequestURI().substring(request.getContextPath().length() + "/v1/mockdummy".length());
         HttpMethod method = HttpMethod.valueOf(request.getMethod());
-        LOGGER.info("Full Path is : "+fullPath+" | Sub Path : "+subPath+" | Method : "+method+" | Vertical : "+vertical);
+        LOGGER.info("Sub Path : "+subPath+" | Method : "+method.name()+" | Vertical : "+vertical);
         Optional<MockDataModel> mockedData = mockDataRepository.findByUriAndVerticalAndMethod(subPath, vertical, method.name());
         if (mockedData.isPresent()) {
             Map<String, Object> mockedResponse = mockedData.get().getResponse();
