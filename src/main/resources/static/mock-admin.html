@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/jpeg" href="/favicon.jpg" />
     <title>Mock Admin Dashboard</title>
     <style>
         body {
@@ -261,19 +262,28 @@ function fetchMock() {
   const uri = encodeURIComponent(document.getElementById('uri').value);
   const vertical = encodeURIComponent(document.getElementById('vertical').value);
   const method = encodeURIComponent(document.getElementById('method').value);
+
+  // Clear previous results
+  document.getElementById('jsonOutput').innerHTML = "";
+  document.querySelector("#resultTable tbody").innerHTML = "";
+  document.getElementById("resultTable").style.display = "none";
+  document.getElementById("pageIndicator").textContent = "";
+
   fetch(`${baseUrl}/fetch?uri=${uri}&vertical=${vertical}&method=${method}`)
-  .then(res => res.json())
-  .then(data => {
-    if (Array.isArray(data)) {
-      fetchedData = data;
-    } else if (data && typeof data === 'object') {
-      fetchedData = [data];  // wrap single object into array
-    } else {
-      fetchedData = [];
-    }
-    currentPage = 1;
-    showTablePage();
-  });
+    .then(res => res.json().then(data => ({ status: res.status, body: data })))
+    .then(({ status, body }) => {
+      if (status === 200) {
+        fetchedData = Array.isArray(body) ? body : [body];
+        currentPage = 1;
+        showTablePage();
+      } else {
+        fetchedData = [];
+        document.getElementById("jsonOutput").innerHTML = `<pre>${JSON.stringify(body, null, 2)}</pre>`;
+      }
+    })
+    .catch(err => {
+      document.getElementById("jsonOutput").innerHTML = `<pre>Error: ${err.message}</pre>`;
+    });
 }
 
 function showTablePage() {
