@@ -194,10 +194,10 @@
     <div class="divider"></div>
 
     <div class="result" id="result">
-        <div id="pagination" style="margin-top: 10px; text-align: center;">
-            <button onclick="prevPage()">Previous</button>
+        <div id="paginationControls" style="margin-top: 10px; text-align: center;">
+            <button id="prevBtn" onclick="prevPage()">Previous</button>
             <span id="pageIndicator" style="margin: 0 10px;"></span>
-            <button onclick="nextPage()">Next</button>
+            <button id="nextBtn" onclick="nextPage()">Next</button>
         </div>
         <div id="jsonOutput"></div>
         <table id="resultTable" style="display: none;">
@@ -217,7 +217,9 @@
 
 <script>
     const baseUrl = '/analytics_event_dump/admin/mock-data';
-
+    window.onload = function () {
+    document.getElementById("paginationControls").style.display = "none";
+    };
     function getPayload() {
       let uri = document.getElementById('uri').value.trim();
       let vertical = document.getElementById('vertical').value;
@@ -268,6 +270,7 @@ function fetchMock() {
   document.querySelector("#resultTable tbody").innerHTML = "";
   document.getElementById("resultTable").style.display = "none";
   document.getElementById("pageIndicator").textContent = "";
+  document.getElementById("paginationControls").style.display = "none"; // hide buttons initially
 
   fetch(`${baseUrl}/fetch?uri=${uri}&vertical=${vertical}&method=${method}`)
     .then(res => res.json().then(data => ({ status: res.status, body: data })))
@@ -276,13 +279,18 @@ function fetchMock() {
         fetchedData = Array.isArray(body) ? body : [body];
         currentPage = 1;
         showTablePage();
+        if (fetchedData.length > 0) {
+          document.getElementById("paginationControls").style.display = "block";
+        }
       } else {
         fetchedData = [];
         document.getElementById("jsonOutput").innerHTML = `<pre>${JSON.stringify(body, null, 2)}</pre>`;
+        document.getElementById("paginationControls").style.display = "none";
       }
     })
     .catch(err => {
       document.getElementById("jsonOutput").innerHTML = `<pre>Error: ${err.message}</pre>`;
+      document.getElementById("paginationControls").style.display = "none";
     });
 }
 
