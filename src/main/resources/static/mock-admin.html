@@ -261,7 +261,7 @@ function fetchMock() {
   const uri = encodeURIComponent(document.getElementById('uri').value);
   const vertical = encodeURIComponent(document.getElementById('vertical').value);
   const method = encodeURIComponent(document.getElementById('method').value);
-  fetch(`${baseUrl}/fetch-all?uri=${uri}&vertical=${vertical}&method=${method}`)
+  fetch(`${baseUrl}/fetch?uri=${uri}&vertical=${vertical}&method=${method}`)
   .then(res => res.json())
   .then(data => {
     if (Array.isArray(data)) {
