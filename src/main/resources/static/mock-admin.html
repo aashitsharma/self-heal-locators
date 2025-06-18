@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/jpeg" href="/favicon.jpg" />
     <title>Mock Admin Dashboard</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
     <style>
         body {
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -58,12 +62,25 @@
 
         input, select, textarea {
           width: 100%;
-          padding: 10px;
+          padding: 12px;
           margin-top: 4px;
           margin-bottom: 16px;
-          border-radius: 6px;
+          border-radius: 8px;
           border: 1px solid #ccc;
-          font-size: 14px;
+          font-size: 15px;
+          background-color: #fdfdfd;
+          box-shadow: inset 5px 5px 2px 0px rgba(0, 0, 0, 0.05);
+          transition: border-color 0.2s cubic-bezier(0.5, -0.83, 0.28, 1.52), box-shadow 0.2s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+          outline: none;
+          border-color: #007bff;
+          box-shadow: 0 0 0 3px rgba(0,123,255,0.2);
+        }
+
+        ::placeholder {
+          color: #999;
         }
 
         textarea {
@@ -78,15 +95,33 @@
           font-size: 14px;
           font-weight: 600;
           border: none;
-          border-radius: 6px;
+          border-radius: 20px;
           cursor: pointer;
           transition: background-color 0.3s ease;
+          margin-top: 10px;
+        }
+        .right-buttons button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+          font-size: 15px;
+          padding: 12px;
+          box-shadow: 0px 0px 6px 5px rgb(10 9 9 / 21%);
+          transition: background-color 0.3s ease;
+          margin-top: 10px;
+          border-color: #1f82eb;
         }
 
-        .btn-create    { background-color: #28a745; }   /* Green */
-        .btn-update    { background-color: #ffc107; color: #212529; } /* Yellow */
-        .btn-fetch     { background-color: #007bff; }
-        .btn-delete    { background-color: #dc3545; }
+        .right-buttons button:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .btn-create    { background-color: #2fc151; }   /* Green */
+        .btn-update    { background-color: #eebb22; color: #212529; } /* Yellow */
+        .btn-fetch     { background-color: #1f82eb; }
+        .btn-delete    { background-color: #dd4a59; }
 
         .btn-create:hover  { background-color: #218838; }
         .btn-update:hover  { background-color: #e0a800; }
@@ -99,41 +134,73 @@
         }
 
         .result {
-          background: #f1f3f5;
-          padding: 20px;
-          border-radius: 8px;
-          border: 1px solid #ccc;
+          background: #f1f3f500;
+          border-radius: 15px;
+          border: 1px solid #716868;
         }
 
         .result pre {
           white-space: pre-wrap;
           word-break: break-word;
-          font-family: monospace;
+          font-family: system-ui;
+          transition: auto;
         }
 
         table {
           width: 100%;
           border-collapse: collapse;
-          margin-top: 15px;
+          margin-top: 20px;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        th, td {
-          padding: 12px;
-          border: 1px solid #ccc;
+        thead tr {
+          background-color: #f0f0f0;
           text-align: left;
-          vertical-align: top;
+          font-weight: 600;
+          font-size: 14px;
         }
 
-        th {
-          background-color: #e9ecef;
+        thead th, tbody td {
+          padding: 12px 16px;
+          border: 1px solid #584a4a;
+          font-family: system-ui;
         }
 
-        td pre {
-          max-height: 100px;
-          overflow: auto;
-          white-space: pre-wrap;
-          word-break: break-word;
+        tbody tr {
+          background-color: #fff;
+          font-size: 15px;
+          transition: background-color 0.3s ease;
         }
+
+        tbody tr:hover {
+          background-color: #f9f9f9;
+        }
+
+        tbody td pre {
+          margin: 0;
+          font-family: monospace;
+          background: #fcfcfc;
+          padding: 10px;
+          border-radius: 4px;
+          max-height: 150px;
+          overflow-y: auto;
+        }
+
+        tbody td button {
+          margin-top: 8px;
+          padding: 6px 10px;
+          font-size: 12px;
+          background-color: #007bff;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+        }
+
+        tbody td button:hover {
+          background-color: #023d7c;
+        }
+
 
         @media screen and (max-width: 768px) {
           .form-section {
@@ -159,7 +226,66 @@
         td button:hover {
         background-color: #023d7c;
         }
+
+        #paginationControls button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 8px 14px;
+        font-size: 13px;
+        margin: 4px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        }
+
+        #paginationControls button:hover {
+          background-color: #0056b3;
+        }
+
+        h2 {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 26px;
+        font-weight: 700;
+        text-align: center;
+        color: #2c3e50;
+        background-color: #eaf4ff;
+        padding: 14px 20px;
+        margin-bottom: 30px;
+        border: 2px solid #5779e7;
+        border-radius: 15px;
+        box-shadow: 0 3px 20px 14px rgb(134 179 227 / 15%);
+        display: inline-block;
+        margin: 10px auto 20px;
+        margin-left: 250px;
+        }
     </style>
+
+    <!-- Toast CSS -->
+<style>
+  .toast {
+  visibility: hidden;
+  min-width: 240px;
+  background-color: #323232;
+  color: #fff;
+  text-align: center;
+  border-radius: 8px;
+  padding: 12px 16px;
+  position: fixed;
+  z-index: 9999;
+  left: 50%;
+  bottom: 30px;
+  transform: translateX(-50%);
+  font-size: 15px;
+  transition: visibility 0s, opacity 0.5s ease;
+  opacity: 0;
+}
+
+.toast.show {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
 </head>
 <body>
 <div class="container">
@@ -209,11 +335,6 @@
     <div class="divider"></div>
 
     <div class="result" id="result">
-        <div id="paginationControls" style="margin-top: 10px; text-align: center;">
-            <button id="prevBtn" onclick="prevPage()">Previous</button>
-            <span id="pageIndicator" style="margin: 0 10px;"></span>
-            <button id="nextBtn" onclick="nextPage()">Next</button>
-        </div>
         <div id="jsonOutput"></div>
         <table id="resultTable" style="display: none;">
             <thead>
@@ -227,6 +348,11 @@
             </thead>
             <tbody></tbody>
         </table>
+        <div id="paginationControls" style="margin-top: 10px; text-align: center;">
+            <button id="prevBtn" onclick="prevPage()">Previous</button>
+            <span id="pageIndicator" style="margin: 0 10px;"></span>
+            <button id="nextBtn" onclick="nextPage()">Next</button>
+        </div>
     </div>
 </div>
 
@@ -239,10 +365,19 @@
 
     function responseHandler(res) {
       if (res.status === 403) {
-        alert("You must connect VPN first");
+        showToast("You must connect VPN first");
         throw new Error("403 - VPN required");
       }
       return res.json();
+    }
+
+    function validateUri() {
+      const uri = document.getElementById('uri').value.trim();
+      if (!uri) {
+        showToast("URI field is required for this operation.");
+        return false;
+      }
+      return true;
     }
 
     function clearDisplay(){
@@ -265,7 +400,7 @@
       try {
         parsedResponse = JSON.parse(responseStr);
       } catch (e) {
-        alert('Invalid JSON in response field.');
+        showToast('Invalid JSON in response field.');
         throw e;
       }
 
@@ -274,6 +409,7 @@
 
     function createMock() {
       clearDisplay();
+      if (!validateUri()) return;
       let payload = getPayload();
       fetch(baseUrl + '/create', {
         method: 'POST',
@@ -285,11 +421,24 @@
 
     function updateMock() {
       clearDisplay();
+      if (!validateUri()) return;
       let payload = getPayload();
       fetch(baseUrl + '/update', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
+      }).then(responseHandler)
+        .then(showResult);
+    }
+
+    function deleteMock() {
+      const uri = encodeURIComponent(document.getElementById('uri').value);
+      const vertical = encodeURIComponent(document.getElementById('vertical').value);
+      const method = encodeURIComponent(document.getElementById('method').value);
+      clearDisplay();
+      if (!validateUri()) return;
+      fetch(`${baseUrl}/delete?uri=${uri}&vertical=${vertical}&method=${method}`, {
+        method: 'DELETE'
       }).then(responseHandler)
         .then(showResult);
     }
@@ -315,12 +464,12 @@ function fetchMock() {
         }
       }
       else if(status === 403){
-        alert("You must connect VPN first");
+        showToast("You must connect VPN first");
         throw new Error("403 - VPN required");
       }
        else {
         fetchedData = [];
-        document.getElementById("jsonOutput").innerHTML = `<pre>${JSON.stringify(body, null, 2)}</pre>`;
+        document.getElementById("jsonOutput").innerHTML = `<pre><code class="json">${JSON.stringify(body, null, 2)}</code></pre>`;
         document.getElementById("paginationControls").style.display = "none";
       }
     })
@@ -370,20 +519,8 @@ function prevPage() {
     showTablePage();
   }
 }
-
-    function deleteMock() {
-      const uri = encodeURIComponent(document.getElementById('uri').value);
-      const vertical = encodeURIComponent(document.getElementById('vertical').value);
-      const method = encodeURIComponent(document.getElementById('method').value);
-      clearDisplay();
-      fetch(`${baseUrl}/delete?uri=${uri}&vertical=${vertical}&method=${method}`, {
-        method: 'DELETE'
-      }).then(responseHandler)
-        .then(showResult);
-    }
-
     function showResult(data) {
-      document.getElementById('jsonOutput').innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+      document.getElementById('jsonOutput').innerHTML = `<pre><code class="json">${JSON.stringify(data, null, 2)}</code></pre>`;
       document.getElementById("resultTable").style.display = "none";
     }
 
@@ -397,7 +534,7 @@ function prevPage() {
           <td>${entry.vertical}</td>
           <td>${entry.method}</td>
           <td>${entry.responseCode}</td>
-          <td><pre>${JSON.stringify(entry.response, null, 2)}</pre></td>
+          <td><pre><code class="json">${JSON.stringify(entry.response, null, 2)}</code></pre></td>
         `;
         tbody.appendChild(tr);
       });
@@ -407,11 +544,26 @@ function prevPage() {
     function copyToClipboard(elementId) {
     const text = document.getElementById(elementId).innerText;
     navigator.clipboard.writeText(text).then(() => {
-      alert("Response copied to clipboard!");
+      showToast("Response copied to clipboard!");
     }).catch(err => {
-      alert("Failed to copy: " + err);
+      showToast("Failed to copy: " + err);
     });
     }
 </script>
+
+<script>
+  // 🔔 Toast Notification
+  function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.innerText = message;
+    toast.className = "toast show";
+    setTimeout(() => {
+      toast.className = toast.className.replace("show", "");
+    }, 3000);
+  }
+</script>
+  <!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
+  </div>
 </body>
 </html>
