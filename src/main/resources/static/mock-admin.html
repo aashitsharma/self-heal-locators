@@ -320,7 +320,7 @@
   background-color: #323232;
   color: #fff;
   text-align: center;
-  border-radius: 8px;
+  border-radius: 15px;
   padding: 12px 16px;
   position: fixed;
   z-index: 9999;
@@ -350,8 +350,8 @@
             <label for="vertical">Vertical</label>
             <select id="vertical">
                 <option value="pharmacy">Pharmacy</option>
-                <option value="lab">Lab</option>
-                <option value="healthcare">Healthcare</option>
+                <option value="labs">Lab</option>
+                <option value="unifiedcart">Unified Cart</option>
             </select>
 
             <label for="method">HTTP Method</label>
@@ -526,6 +526,7 @@ function fetchMock() {
         fetchedData = [];
         document.getElementById("jsonOutput").innerHTML = `<pre><code class="json">${JSON.stringify(body, null, 2)}</code></pre>`;
         document.getElementById("paginationControls").style.display = "none";
+        document.getElementById("jsonOutput").scrollIntoView({ behavior: 'smooth' });
       }
     })
     .catch(err => {
