@@ -144,6 +144,21 @@
             padding-left: 0;
           }
         }
+
+        td button {
+        margin-top: 8px;
+        padding: 6px 10px;
+        font-size: 12px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        }
+
+        td button:hover {
+        background-color: #023d7c;
+        }
     </style>
 </head>
 <body>
@@ -216,10 +231,29 @@
 </div>
 
 <script>
-    const baseUrl = '/analytics_event_dump/admin/mock-data';
+    //const baseUrl = '/analytics_event_dump/admin/mock-data';
+    const baseUrl = '/admin/mock-data';
     window.onload = function () {
     document.getElementById("paginationControls").style.display = "none";
     };
+
+    function responseHandler(res) {
+      if (res.status === 403) {
+        alert("You must connect VPN first");
+        throw new Error("403 - VPN required");
+      }
+      return res.json();
+    }
+
+    function clearDisplay(){
+       // Clear previous results
+      document.getElementById('jsonOutput').innerHTML = "";
+      document.querySelector("#resultTable tbody").innerHTML = "";
+      document.getElementById("resultTable").style.display = "none";
+      document.getElementById("pageIndicator").textContent = "";
+      document.getElementById("paginationControls").style.display = "none"; // hide buttons initially
+    }
+
     function getPayload() {
       let uri = document.getElementById('uri').value.trim();
       let vertical = document.getElementById('vertical').value;
@@ -239,21 +273,25 @@
     }
 
     function createMock() {
+      clearDisplay();
       let payload = getPayload();
       fetch(baseUrl + '/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
-      }).then(res => res.json()).then(showResult);
+      }).then(responseHandler)
+        .then(showResult);
     }
 
     function updateMock() {
+      clearDisplay();
       let payload = getPayload();
       fetch(baseUrl + '/update', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
-      }).then(res => res.json()).then(showResult);
+      }).then(responseHandler)
+        .then(showResult);
     }
 
     let currentPage = 1;
@@ -264,14 +302,7 @@ function fetchMock() {
   const uri = encodeURIComponent(document.getElementById('uri').value);
   const vertical = encodeURIComponent(document.getElementById('vertical').value);
   const method = encodeURIComponent(document.getElementById('method').value);
-
-  // Clear previous results
-  document.getElementById('jsonOutput').innerHTML = "";
-  document.querySelector("#resultTable tbody").innerHTML = "";
-  document.getElementById("resultTable").style.display = "none";
-  document.getElementById("pageIndicator").textContent = "";
-  document.getElementById("paginationControls").style.display = "none"; // hide buttons initially
-
+  clearDisplay();
   fetch(`${baseUrl}/fetch?uri=${uri}&vertical=${vertical}&method=${method}`)
     .then(res => res.json().then(data => ({ status: res.status, body: data })))
     .then(({ status, body }) => {
@@ -282,7 +313,12 @@ function fetchMock() {
         if (fetchedData.length > 0) {
           document.getElementById("paginationControls").style.display = "block";
         }
-      } else {
+      }
+      else if(status === 403){
+        alert("You must connect VPN first");
+        throw new Error("403 - VPN required");
+      }
+       else {
         fetchedData = [];
         document.getElementById("jsonOutput").innerHTML = `<pre>${JSON.stringify(body, null, 2)}</pre>`;
         document.getElementById("paginationControls").style.display = "none";
@@ -301,14 +337,18 @@ function showTablePage() {
 
   const tbody = document.querySelector("#resultTable tbody");
   tbody.innerHTML = "";
-  pageData.forEach(entry => {
+  pageData.forEach((entry, i) => {
     let tr = document.createElement("tr");
+    const responseId = `resp-${start + i}`;
     tr.innerHTML = `
       <td>${entry.uri}</td>
       <td>${entry.vertical}</td>
       <td>${entry.method}</td>
       <td>${entry.responseCode}</td>
-      <td><pre>${JSON.stringify(entry.response, null, 2)}</pre></td>
+      <td>
+        <pre id="${responseId}">${JSON.stringify(entry.response, null, 2)}</pre>
+        <button onclick="copyToClipboard('${responseId}')">Copy</button>
+      </td>
     `;
     tbody.appendChild(tr);
   });
@@ -335,9 +375,11 @@ function prevPage() {
       const uri = encodeURIComponent(document.getElementById('uri').value);
       const vertical = encodeURIComponent(document.getElementById('vertical').value);
       const method = encodeURIComponent(document.getElementById('method').value);
+      clearDisplay();
       fetch(`${baseUrl}/delete?uri=${uri}&vertical=${vertical}&method=${method}`, {
         method: 'DELETE'
-      }).then(res => res.json()).then(showResult);
+      }).then(responseHandler)
+        .then(showResult);
     }
 
     function showResult(data) {
@@ -360,6 +402,15 @@ function prevPage() {
         tbody.appendChild(tr);
       });
       document.getElementById("resultTable").style.display = "table";
+    }
+
+    function copyToClipboard(elementId) {
+    const text = document.getElementById(elementId).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      alert("Response copied to clipboard!");
+    }).catch(err => {
+      alert("Failed to copy: " + err);
+    });
     }
 </script>
 </body>

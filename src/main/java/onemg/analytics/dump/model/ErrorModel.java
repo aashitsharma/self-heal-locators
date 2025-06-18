@@ -8,7 +8,7 @@ import org.apache.log4j.MDC;
 public class ErrorModel {
     @JsonProperty("Status Code")
     private int statusCode;
-    @JsonProperty("Error Message")
+    @JsonProperty("Status Message")
     private String message;
     @JsonProperty("Reference-Id")
     private String refId;

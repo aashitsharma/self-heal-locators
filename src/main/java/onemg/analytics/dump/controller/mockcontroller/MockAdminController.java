@@ -36,7 +36,7 @@ public class MockAdminController
 
         MockDataModel model = toModel(request);
         mockDataRepository.save(model);
-        return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.CREATED.value(),"Mock data created."), HttpStatusCode.valueOf(HttpStatus.CREATED.value()));
+        return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.CREATED.value(),"Mock data created for : "+request.getUri().trim()), HttpStatusCode.valueOf(HttpStatus.CREATED.value()));
     }
 
     // 🔹 Update mock data (based on unique combo)
@@ -46,7 +46,7 @@ public class MockAdminController
                 request.getUri().trim(), request.getVertical().trim(), request.getMethod());
 
         if (existing.isEmpty()) {
-            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.NOT_FOUND.value(),"Mock data not found for update."), HttpStatusCode.valueOf(HttpStatus.NOT_FOUND.value()));
+            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.NOT_FOUND.value(),"Mock data not found of for : "+request.getUri().trim()), HttpStatusCode.valueOf(HttpStatus.NOT_FOUND.value()));
         }
 
         MockDataModel model = existing.get();
@@ -55,7 +55,7 @@ public class MockAdminController
         model.setUri(request.getUri());
 
         mockDataRepository.save(model);
-        return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.OK.value(),"Mock data updated."), HttpStatusCode.valueOf(HttpStatus.OK.value()));
+        return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.OK.value(),"Mock data updated for : "+request.getUri().trim()), HttpStatusCode.valueOf(HttpStatus.OK.value()));
     }
 
     // 🔹 Fetch mock data (based on unique combo)
@@ -84,7 +84,7 @@ public class MockAdminController
         else if(!mockList.isEmpty()){
             return ResponseEntity.ok(mockList);
         }else {
-            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.NOT_FOUND.value(),"Mock data not found."), HttpStatusCode.valueOf(HttpStatus.NOT_FOUND.value()));
+            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.NOT_FOUND.value(),"Mock data not found for given combination."), HttpStatusCode.valueOf(HttpStatus.NOT_FOUND.value()));
         }
     }
 
@@ -98,9 +98,9 @@ public class MockAdminController
 
         if (existing.isPresent()) {
             mockDataRepository.delete(existing.get());
-            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.OK.value(),"Mock data deleted successfully."), HttpStatusCode.valueOf(HttpStatus.OK.value()));
+            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.OK.value(),"Mock data deleted successfully for : "+uri.trim()), HttpStatusCode.valueOf(HttpStatus.OK.value()));
         } else {
-            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.NOT_FOUND.value(),"Mock data not found."), HttpStatusCode.valueOf(HttpStatus.NOT_FOUND.value()));
+            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.NOT_FOUND.value(),"Mock data not found for : "+uri.trim()), HttpStatusCode.valueOf(HttpStatus.NOT_FOUND.value()));
         }
     }
 
@@ -110,11 +110,11 @@ public class MockAdminController
 
         if(data.isPresent()){
             mockDataRepository.delete(data.get());
-            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.OK.value(),"Mock data deleted successfully."), HttpStatusCode.valueOf(HttpStatus.OK.value()));
+            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.OK.value(),"Mock data deleted successfully for Id : "+dataId), HttpStatusCode.valueOf(HttpStatus.OK.value()));
 
         }
         else {
-            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.NOT_FOUND.value(),"Mock data not found."), HttpStatusCode.valueOf(HttpStatus.NOT_FOUND.value()));
+            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.NOT_FOUND.value(),"Mock data not found for Id : "+dataId), HttpStatusCode.valueOf(HttpStatus.NOT_FOUND.value()));
         }
         //68505f45acebfe6efb5f0172
     }
