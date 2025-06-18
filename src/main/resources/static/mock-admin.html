@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/jpeg" href="/favicon.jpg" />
+    <link rel="icon" type="image/jpeg" href="/analytics_event_dump/favicon.jpg" />
     <title>Mock Admin Dashboard</title>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -14,14 +14,19 @@
           background-color: #f7f9fc;
           margin: 0;
           padding: 30px;
+          background-image: url('/analytics_event_dump/background.jpg');
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-attachment: fixed;
         }
 
         .container {
-          max-width: 1000px;
-          margin: auto;
-          background: #ffffff;
-          padding: 30px;
+          background-color: rgba(255, 255, 255, 0.2); /* translucent white */
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px); /* for Safari support */
           border-radius: 12px;
+          padding: 30px;
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
@@ -66,9 +71,12 @@
           margin-top: 4px;
           margin-bottom: 16px;
           border-radius: 8px;
+          background-color: rgba(255, 255, 255, 0.4);
+          backdrop-filter: blur(4px);
+          -webkit-backdrop-filter: blur(4px);
           border: 1px solid #ccc;
+          color: #000;
           font-size: 15px;
-          background-color: #fdfdfd;
           box-shadow: inset 5px 5px 2px 0px rgba(0, 0, 0, 0.05);
           transition: border-color 0.2s cubic-bezier(0.5, -0.83, 0.28, 1.52), box-shadow 0.2s ease;
         }
@@ -151,6 +159,11 @@
           border-collapse: collapse;
           margin-top: 20px;
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          background-color: rgba(255, 255, 255, 0.2); /* translucent white */
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px); /* for Safari support */
+          border-radius: 8px;
+          overflow: hidden;
         }
 
         thead tr {
@@ -158,6 +171,9 @@
           text-align: left;
           font-weight: 600;
           font-size: 14px;
+          background-color: rgba(255, 255, 255, 0.2); /* translucent white */
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px); /* for Safari support */
         }
 
         thead th, tbody td {
@@ -166,14 +182,37 @@
           font-family: system-ui;
         }
 
+        /* Table headers */
+        th {
+          background-color: rgba(255, 255, 255, 0.3);
+          color: #333;
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          font-weight: bold;
+        }
+
+        /* Table cells */
+        td {
+          background-color: rgba(255, 255, 255, 0.25);
+          color: #111;
+          backdrop-filter: blur(6px);
+          -webkit-backdrop-filter: blur(6px);
+        }
+
         tbody tr {
           background-color: #fff;
           font-size: 15px;
           transition: background-color 0.3s ease;
+          background-color: rgba(255, 255, 255, 0.2); /* translucent white */
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px); /* for Safari support */
         }
 
         tbody tr:hover {
           background-color: #f9f9f9;
+          background-color: rgba(255, 255, 255, 0.2); /* translucent white */
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px); /* for Safari support */
         }
 
         tbody td pre {
@@ -184,6 +223,12 @@
           border-radius: 4px;
           max-height: 150px;
           overflow-y: auto;
+          background-color: rgba(255, 255, 255, 0.2); /* translucent white */
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px); /* for Safari support */
+          white-space: pre-wrap;
+          word-break: break-word;
+          background-color: transparent;
         }
 
         tbody td button {
@@ -199,6 +244,7 @@
 
         tbody td button:hover {
           background-color: #023d7c;
+          
         }
 
 
@@ -258,6 +304,11 @@
         display: inline-block;
         margin: 10px auto 20px;
         margin-left: 250px;
+        }
+        .container,
+        input, select, textarea,
+        table, th, td {
+          transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
         }
     </style>
 
@@ -336,18 +387,22 @@
 
     <div class="result" id="result">
         <div id="jsonOutput"></div>
-        <table id="resultTable" style="display: none;">
-            <thead>
-            <tr>
-                <th>URI</th>
-                <th>Vertical</th>
-                <th>Method</th>
-                <th>Response Code</th>
-                <th>Response</th>
-            </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+
+        <div id="resultTableWrapper">
+          <table id="resultTable" style="display: none;">
+              <thead>
+              <tr>
+                  <th>URI</th>
+                  <th>Vertical</th>
+                  <th>Method</th>
+                  <th>Response Code</th>
+                  <th>Response</th>
+              </tr>
+              </thead>
+              <tbody></tbody>
+          </table>
+        </div>
+
         <div id="paginationControls" style="margin-top: 10px; text-align: center;">
             <button id="prevBtn" onclick="prevPage()">Previous</button>
             <span id="pageIndicator" style="margin: 0 10px;"></span>
@@ -357,8 +412,8 @@
 </div>
 
 <script>
-    const baseUrl = '/analytics_event_dump/admin/mock-data';
-    //const baseUrl = '/admin/mock-data';
+    //const baseUrl = '/analytics_event_dump/admin/mock-data';
+    const baseUrl = '/admin/mock-data';
     window.onload = function () {
     document.getElementById("paginationControls").style.display = "none";
     };
@@ -504,6 +559,8 @@ function showTablePage() {
 
   document.getElementById("resultTable").style.display = "table";
   document.getElementById("pageIndicator").textContent = `Page ${currentPage} of ${Math.ceil(fetchedData.length / rowsPerPage)}`;
+    // 🔽 Smooth scroll to table
+  document.getElementById("resultTable").scrollIntoView({ behavior: 'smooth' });
 }
 
 function nextPage() {
@@ -522,6 +579,8 @@ function prevPage() {
     function showResult(data) {
       document.getElementById('jsonOutput').innerHTML = `<pre><code class="json">${JSON.stringify(data, null, 2)}</code></pre>`;
       document.getElementById("resultTable").style.display = "none";
+      // 🔽 Scroll to result display
+      document.getElementById("jsonOutput").scrollIntoView({ behavior: 'smooth' });
     }
 
     function showTable(dataArray) {
@@ -542,12 +601,28 @@ function prevPage() {
     }
 
     function copyToClipboard(elementId) {
-    const text = document.getElementById(elementId).innerText;
-    navigator.clipboard.writeText(text).then(() => {
-      showToast("Response copied to clipboard!");
-    }).catch(err => {
-      showToast("Failed to copy: " + err);
-    });
+        const text = document.getElementById(elementId).innerText;
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("Response copied to clipboard!");
+            }).catch(err => {
+                showToast("Failed to copy: " + err);
+            });
+        } else {
+            // Fallback for unsupported browsers or insecure context
+            const tempInput = document.createElement("textarea");
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            try {
+                document.execCommand("copy");
+                showToast("Response copied to clipboard!");
+            } catch (err) {
+                showToast("Fallback copy failed: " + err);
+            }
+            document.body.removeChild(tempInput);
+        }
     }
 </script>
 
