@@ -22,6 +22,7 @@
           background-attachment: fixed;
           height: 100vh;
           display: flex;
+          flex-wrap: wrap;
         }
 
         .container {
@@ -136,7 +137,7 @@
         }
 
         .result {
-          background: #f1f3f500;
+          background-color: rgba(255, 255, 255, 0.2); /* translucent white */
           border-radius: 15px;
           border: 1px solid #716868;
         }
@@ -146,6 +147,7 @@
           word-break: break-word;
           font-family: system-ui;
           transition: auto;
+          font-size: 15px;
         }
 
         table {
@@ -172,8 +174,9 @@
 
         thead th, tbody td {
           padding: 12px 16px;
-          border: 1px solid #584a4a;
+          border: 1px solid #040404;
           font-family: system-ui;
+          padding:15px;
         }
 
         /* Table headers */
@@ -183,6 +186,8 @@
           backdrop-filter: blur(10px);
           -webkit-backdrop-filter: blur(10px);
           font-weight: bold;
+          font-size: 18px;
+          text-align: center;
         }
 
         /* Table cells */
@@ -232,13 +237,14 @@
           background-color: #007bff;
           color: white;
           border: none;
-          border-radius: 4px;
+          border-radius: 6px;
           cursor: pointer;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.55);
         }
 
         tbody td button:hover {
           background-color: #023d7c;
-          
+          transform: translateX(3px);
         }
 
 
@@ -287,7 +293,7 @@
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         font-size: 35px;
         font-weight: 1000;
-        color: #065eb6;
+        color: #04376a;
         text-shadow: 3px 2px 3px #d4e1f1;
         background-color: rgba(255, 255, 255, 0); /* translucent white */
         padding: 20px 20px;
@@ -307,6 +313,7 @@
         input, select, textarea,
         table, th, td {
           transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+          background-color: rgba(255, 255, 255, 0.2); /* translucent white */
         }
 
     </style>
@@ -314,21 +321,21 @@
     <!-- Toast CSS -->
     <style>
       .toast {
-      visibility: hidden;
-      min-width: 240px;
-      background-color: #323232;
-      color: #fff;
-      text-align: center;
-      border-radius: 15px;
-      padding: 12px 16px;
-      position: fixed;
-      z-index: 9999;
-      left: 50%;
-      bottom: 30px;
-      transform: translateX(-50%);
-      font-size: 15px;
-      transition: visibility 0s, opacity 0.5s ease;
-      opacity: 0;
+        visibility: hidden;
+        min-width: 240px;
+        background-color: #000000;
+        color: #fff;
+        text-align: center;
+        border-radius: 15px;
+        padding: 12px 16px;
+        position: fixed;
+        z-index: 9999;
+        left: 50%;
+        bottom: 30px;
+        transform: translateX(-50%);
+        font-size: 17px;
+        transition: visibility 0s, opacity 0.5s ease;
+        opacity: 0;
     }
 
     .toast.show {
