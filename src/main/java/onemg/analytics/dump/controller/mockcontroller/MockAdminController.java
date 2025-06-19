@@ -3,7 +3,10 @@ package onemg.analytics.dump.controller.mockcontroller;
 
 import onemg.analytics.dump.model.ErrorModel;
 import onemg.analytics.dump.model.MockDataModel;
+import onemg.analytics.dump.model.MockDataVertical;
 import onemg.analytics.dump.repository.MockDataRepository;
+import onemg.analytics.dump.repository.MockDataVerticalRepository;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
@@ -23,6 +26,8 @@ public class MockAdminController
     private static final Logger LOGGER = Logger.getLogger(MockAdminController.class);
     @Autowired
     private MockDataRepository mockDataRepository;
+    @Autowired
+    private MockDataVerticalRepository mVerticalRepository;
 
     // 🔹 Create new mock data
     @PostMapping("/create")
@@ -116,8 +121,70 @@ public class MockAdminController
         else {
             return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.NOT_FOUND.value(),"Mock data not found for Id : "+dataId), HttpStatusCode.valueOf(HttpStatus.NOT_FOUND.value()));
         }
-        //68505f45acebfe6efb5f0172
     }
+
+    // 🔹 Create new Vertical data
+    @PostMapping("/vertical/add")
+    public ResponseEntity<?> createMockVertical(@RequestBody MockDataVertical request) {
+        Optional<MockDataVertical> existing = mVerticalRepository.findByVerticalName(request.getVerticalName().toUpperCase());
+
+        if (existing.isPresent()) {
+            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.CONFLICT.value(),"Vertical already exist : "+request.getVerticalName()), HttpStatusCode.valueOf(HttpStatus.CONFLICT.value()));
+        }
+        else if(!request.getVerticalName().matches("^[a-zA-Z]+$")){
+            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.BAD_REQUEST.value(),"Not a valid Vertical Name format | Expected name should be : "+request.getVerticalName().replaceAll("[^a-zA-Z]", "")), HttpStatusCode.valueOf(HttpStatus.BAD_REQUEST.value()));
+
+        }
+
+        MockDataVertical model = new MockDataVertical();
+        model.setVerticalName(request.getVerticalName().trim().toUpperCase());
+        mVerticalRepository.save(model);
+        return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.CREATED.value(),"Mock data created for : "+model.getVerticalName().trim()), HttpStatusCode.valueOf(HttpStatus.CREATED.value()));
+    }
+
+     // 🔹 Fetch mock vertical data
+    @GetMapping("/vertical/fetch")
+    public ResponseEntity<?> getMockVerticalData(){
+        List<MockDataVertical> lVerticals = mVerticalRepository.fetchAllVerticals();
+        if(lVerticals.isEmpty()){
+            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.NOT_FOUND.value(),"Vertical data set not present"), HttpStatusCode.valueOf(HttpStatus.NOT_FOUND.value()));
+        }
+        return ResponseEntity.ok(lVerticals);
+
+    }
+
+     // 🔹 Update Vertical data
+    @PutMapping("/vertical/update")
+    public ResponseEntity<?> updateMockVertical(@RequestBody MockDataVertical request){
+        Optional<MockDataVertical> existing = mVerticalRepository.findByVerticalName(request.getVerticalName());
+        if(null==request.getUpdatedVerticalName() || request.getUpdatedVerticalName().isEmpty()){
+            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.BAD_REQUEST.value(),"Updated Vertical Name is not provided, please check your request "), HttpStatusCode.valueOf(HttpStatus.BAD_REQUEST.value()));
+        }
+        if(existing.isPresent() && !request.getVerticalName().equalsIgnoreCase(request.getUpdatedVerticalName())){
+            MockDataVertical model = existing.get();
+            model.setVerticalName(request.getUpdatedVerticalName().trim());
+            mVerticalRepository.save(model);
+            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.OK.value(),"Vertical name updated from : "+request.getVerticalName() +" to : "+request.getUpdatedVerticalName()), HttpStatusCode.valueOf(HttpStatus.OK.value()));
+
+        }
+        return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.BAD_REQUEST.value(),"Vertical data set not present or expected and actual name is same "), HttpStatusCode.valueOf(HttpStatus.BAD_REQUEST.value()));
+
+    }
+
+        @DeleteMapping("/vertical/delete/{id}")
+        public ResponseEntity<?> deleteMockVerticalDataById(@PathVariable("id")String dataId){
+        Optional<MockDataVertical> data = mVerticalRepository.findById(dataId.trim());
+
+        if(data.isPresent()){
+            mVerticalRepository.delete(data.get());
+            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.OK.value(),"Vertical data deleted successfully for Id : "+dataId), HttpStatusCode.valueOf(HttpStatus.OK.value()));
+
+        }
+        else {
+            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.NOT_FOUND.value(),"Vertical data not found for Id : "+dataId), HttpStatusCode.valueOf(HttpStatus.NOT_FOUND.value()));
+        }
+    }
+
 
     // 🔸 Reusable mapper
     private MockDataModel toModel(MockDataModel req) {
