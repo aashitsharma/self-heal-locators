@@ -356,9 +356,6 @@
 
             <label for="vertical">Vertical</label>
             <select id="vertical">
-                <option value="pharmacy">Pharmacy</option>
-                <option value="labs">Lab</option>
-                <option value="unifiedcart">Unified Cart</option>
             </select>
 
             <label for="method">HTTP Method</label>
@@ -423,6 +420,7 @@
     //const baseUrl = '/admin/mock-data';
     window.onload = function () {
     document.getElementById("paginationControls").style.display = "none";
+    populateVerticalDropdown();
     };
 
     function responseHandler(res) {
@@ -541,6 +539,30 @@ function fetchMock() {
       document.getElementById("paginationControls").style.display = "none";
     });
 }
+
+function populateVerticalDropdown() {
+    fetch(`${baseUrl}/vertical/fetch`)
+      .then(res => {
+        if (!res.ok){
+          showToast("Failed to load verticals");
+          throw new Error("Failed to load verticals");
+        } 
+        return res.json();
+      })
+      .then(data => {
+        const dropdown = document.getElementById("vertical");
+        dropdown.innerHTML = ""; // Clear existing options
+        data.forEach(v => {
+          const option = document.createElement("option");
+          option.value = v.verticalName;
+          option.textContent = v.verticalName;
+          dropdown.appendChild(option);
+        });
+      })
+      .catch(err => {
+        showToast("Unable to fetch verticals: " + err.message);
+      });
+  }
 
 function showTablePage() {
   const start = (currentPage - 1) * rowsPerPage;
