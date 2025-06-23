@@ -6,7 +6,9 @@ import onemg.analytics.dump.JsonConfig;
 import onemg.analytics.dump.enums.VerticalService;
 import onemg.analytics.dump.model.ErrorModel;
 import onemg.analytics.dump.model.MockDataModel;
+import onemg.analytics.dump.model.MockDataVertical;
 import onemg.analytics.dump.repository.MockDataRepository;
+import onemg.analytics.dump.repository.MockDataVerticalRepository;
 import onemg.analytics.dump.utils.CommonUtility;
 import org.apache.log4j.Logger;
 import org.apache.tomcat.util.json.JSONParser;
@@ -34,6 +36,8 @@ public class MockControllerDummy {
     //private final String vertical = "pharmacy";
     @Autowired
     private MockDataRepository mockDataRepository;
+    @Autowired
+    private MockDataVerticalRepository mVerticalRepository;
 
     @GetMapping("/mocked-endpoint")
     public ResponseEntity<?> getMockedResponse(@PathVariable String vertical,HttpServletRequest request, HttpEntity<String> entity, @RequestParam(required = false) String mock) {
@@ -50,10 +54,18 @@ public class MockControllerDummy {
         return proxyUnmatchedRequests(vertical,request,entity);
     }
 
-    // Catch-all only within /v1/**
+    /**
+     * All Request will be catch here
+     * @param vertical : Vertical for which mock data is required
+     * @param request : 
+     * @param entity
+     * @return
+     */
     @RequestMapping("/**")
     public ResponseEntity<?> redirection(@PathVariable String vertical,HttpServletRequest request, HttpEntity<String> entity){
-        if(VerticalService.isValidVertical(vertical)){
+        vertical=vertical.toUpperCase();
+        Optional<MockDataVertical> data = mVerticalRepository.findByVerticalName(vertical);
+        if(data.isPresent()){
             String subPath = request.getRequestURI().substring(request.getContextPath().length() + returnVerticalPath(vertical).length());
             HttpMethod method = HttpMethod.valueOf(request.getMethod());
             LOGGER.info("Sub Path : "+subPath+" | Method : "+method.name()+" | Vertical : "+vertical);

@@ -47,14 +47,15 @@
         }
 
         .right-buttons {
-          flex: 0.6;
-          min-width: 200px;
-          display: flex;
-          flex-direction: column;
-          gap: 14px;
-          justify-content: flex-start;
-          padding-left: 30px;
-          border-left: 2px solid #eee;
+        flex: 0.6;
+        min-width: 200px;
+        display: flex;
+        gap: 14px;
+        padding-left: 30px;
+        border-left: 2px solid #ffffff4f;
+        justify-content: center;
+        align-items: stretch;
+        flex-direction: column;
         }
 
         label {
@@ -69,7 +70,7 @@
           padding: 12px;
           margin-top: 4px;
           margin-bottom: 16px;
-          border-radius: 8px;
+          border-radius: 15px;
           background-color: rgba(255, 255, 255, 0.4);
           backdrop-filter: blur(4px);
           -webkit-backdrop-filter: blur(4px);
@@ -78,7 +79,7 @@
           font-size: 15px;
           box-shadow: inset -1px -2px 8px 6px rgba(0, 0, 0, 0.05);
           transition: border-color 0.2s cubic-bezier(0.5, -0.83, 0.28, 1.52), box-shadow 0.2s ease;
-          border: 1px solid #02141c;
+          border: 1.5px solid #02141c;
         }
 
         input:focus, select:focus, textarea:focus {
@@ -121,13 +122,13 @@
           box-shadow: 0 4px 10px rgba(0,0,0,0.55);
         }
 
-        .btn-create    { background-color: #2fc151; }   /* Green */
-        .btn-update    { background-color: #eebb22; color: #212529; } /* Yellow */
+        .btn-create    { background-color: #2ac44e; }   /* Green */
+        .btn-update    { background-color: #fece3c; color: #070707; } /* Yellow */
         .btn-fetch     { background-color: #1f82eb; }
         .btn-delete    { background-color: #dd4a59; }
 
-        .btn-create:hover  { background-color: #218838; }
-        .btn-update:hover  { background-color: #e0a800; }
+        .btn-create:hover  { background-color: #0d8728; }
+        .btn-update:hover  { background-color: #c39303; }
         .btn-fetch:hover   { background-color: #0056b3; }
         .btn-delete:hover  { background-color: #c82333; }
 
@@ -177,6 +178,9 @@
           border: 1px solid #040404;
           font-family: system-ui;
           padding:15px;
+          background-color: rgba(255, 255, 255, 0.2); /* translucent white */
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px); /* for Safari support */
         }
 
         /* Table headers */
@@ -416,11 +420,136 @@
 </div>
 
 <script>
+  const EXPIRATION_TIME_MS = 30 * 1000;
+
+  function base64ToUint8Array(base64) {
+    const raw = atob(base64);
+    const bytes = new Uint8Array(raw.length);
+    for (let i = 0; i < raw.length; ++i) {
+      bytes[i] = raw.charCodeAt(i);
+    }
+    return bytes;
+  }
+
+  async function generateToken(base64Secret) {
+    const keyBytes = base64ToUint8Array(base64Secret);
+    const cryptoKey = await crypto.subtle.importKey(
+      'raw',
+      keyBytes,
+      { name: 'HMAC', hash: 'SHA-256' },
+      false,
+      ['sign']
+    );
+
+    const now = Math.floor(Date.now() / 1000);
+    const payload = {
+      sub: "mock-admin-auth",
+      iat: now,
+      exp: now + Math.floor(EXPIRATION_TIME_MS / 1000)
+    };
+
+    const header = {
+      alg: "HS256",
+      typ: "JWT"
+    };
+
+    const encode = obj => btoa(JSON.stringify(obj)).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
+
+    const encodedHeader = encode(header);
+    const encodedPayload = encode(payload);
+    const tokenBody = `${encodedHeader}.${encodedPayload}`;
+
+    const signatureBuffer = await crypto.subtle.sign('HMAC', cryptoKey, new TextEncoder().encode(tokenBody));
+    const signatureBase64 = btoa(String.fromCharCode(...new Uint8Array(signatureBuffer)))
+      .replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
+
+    return `${tokenBody}.${signatureBase64}`;
+  }
+
+     function setCookie(name, value, days = 1, timeoutMs = 1000) {
+      const expires = new Date(Date.now() + days * 86400000).toUTCString();
+      document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
+
+      return new Promise((resolve, reject) => {
+        const start = Date.now();
+
+        (function waitForCookie() {
+          const cookieMatch = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+          if (cookieMatch) {
+            resolve(decodeURIComponent(cookieMatch[2]));
+          } else if (Date.now() - start > timeoutMs) {
+            reject(new Error("Cookie was not set within timeout."));
+          } else {
+            setTimeout(waitForCookie, 50); // check every 50ms
+          }
+        })();
+      });
+    }
+
+    function getCookie(name) {
+    
+      const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+      return match ? decodeURIComponent(match[2]) : null;
+    }
+
+    function setLocalStorageAndWait(key, value, timeoutMs = 1000) {
+      localStorage.setItem(key, value);
+
+      return new Promise((resolve, reject) => {
+        const start = Date.now();
+
+        (function waitForLocalStorage() {
+          const stored = getFromLocal(key);
+          if (stored !== null) {
+            resolve(stored);
+          } else if (Date.now() - start > timeoutMs) {
+            reject(new Error("Value was not set in localStorage within timeout."));
+          } else {
+            setTimeout(waitForLocalStorage, 50); // retry every 50ms
+          }
+        })();
+      });
+    }
+
+    function getFromLocal(key){
+        const value = localStorage.getItem(key);
+        return value !== null ? value : null;
+    }
+    let base64SecretFromServer=getCookie('mock_secret');
+    async function jwtFetch(url, options = {}) {
+      const token = await generateToken(base64SecretFromServer);
+      options.headers = {
+        ...(options.headers || {}),
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': options.headers?.['Content-Type'] || 'application/json'
+      };
+      return fetch(url, options);
+    }
+</script>
+
+<script>
     const baseUrl = '/analytics_event_dump/admin/mock-data';
     //const baseUrl = '/admin/mock-data';
-    window.onload = function () {
+    window.onload = async function () {
     document.getElementById("paginationControls").style.display = "none";
-    populateVerticalDropdown();
+        if (base64SecretFromServer) {
+          console.log("Secret loaded from cookie:", base64SecretFromServer);
+          // Use the secret as needed
+        } else {
+          fetch(baseUrl + '/jwt', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+          })
+          .then(res => res.json())
+          .then(data => {
+            base64SecretFromServer = data.mock_secret;
+            setCookie("mock_secret", base64SecretFromServer, 1); // Store for 1 day
+            console.log("Secret fetched and stored in cookie:", base64SecretFromServer);
+            // Use the secret as needed
+          })
+          .catch(err => console.error("Error fetching JWT secret:", err));
+        }
+      populateVerticalDropdown();
     };
 
     function responseHandler(res) {
@@ -471,7 +600,7 @@
       clearDisplay();
       if (!validateUri()) return;
       let payload = getPayload();
-      fetch(baseUrl + '/create', {
+      jwtFetch(baseUrl + '/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -483,7 +612,7 @@
       clearDisplay();
       if (!validateUri()) return;
       let payload = getPayload();
-      fetch(baseUrl + '/update', {
+      jwtFetch(baseUrl + '/update', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -497,7 +626,7 @@
       const method = encodeURIComponent(document.getElementById('method').value);
       clearDisplay();
       if (!validateUri()) return;
-      fetch(`${baseUrl}/delete?uri=${uri}&vertical=${vertical}&method=${method}`, {
+      jwtFetch(`${baseUrl}/delete?uri=${uri}&vertical=${vertical}&method=${method}`, {
         method: 'DELETE'
       }).then(responseHandler)
         .then(showResult);
@@ -512,7 +641,7 @@ function fetchMock() {
   const vertical = encodeURIComponent(document.getElementById('vertical').value);
   const method = encodeURIComponent(document.getElementById('method').value);
   clearDisplay();
-  fetch(`${baseUrl}/fetch?uri=${uri}&vertical=${vertical}&method=${method}`)
+  jwtFetch(`${baseUrl}/fetch?uri=${uri}&vertical=${vertical}&method=${method}`)
     .then(res => res.json().then(data => ({ status: res.status, body: data })))
     .then(({ status, body }) => {
       if (status === 200) {
@@ -541,7 +670,11 @@ function fetchMock() {
 }
 
 function populateVerticalDropdown() {
-    fetch(`${baseUrl}/vertical/fetch`)
+    if(!base64SecretFromServer)
+    {
+      location.reload();
+    }
+    jwtFetch(`${baseUrl}/vertical/fetch`)
       .then(res => {
         if (!res.ok){
           showToast("Failed to load verticals");
@@ -664,7 +797,7 @@ function prevPage() {
     toast.className = "toast show";
     setTimeout(() => {
       toast.className = toast.className.replace("show", "");
-    }, 3000);
+    }, 4000);
   }
 </script>
   <!-- Toast Notification -->

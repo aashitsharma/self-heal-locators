@@ -1,11 +1,13 @@
 package onemg.analytics.dump.controller.mockcontroller;
 
 
+import onemg.analytics.dump.JsonConfig;
 import onemg.analytics.dump.model.ErrorModel;
 import onemg.analytics.dump.model.MockDataModel;
 import onemg.analytics.dump.model.MockDataVertical;
 import onemg.analytics.dump.repository.MockDataRepository;
 import onemg.analytics.dump.repository.MockDataVerticalRepository;
+import onemg.analytics.dump.utils.JWTUtils;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +15,12 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -93,6 +97,7 @@ public class MockAdminController
         }
     }
 
+    // 🔹 Delete mock data (based on unique combo)
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteMockData(
             @RequestParam String vertical,
@@ -109,17 +114,36 @@ public class MockAdminController
         }
     }
 
+    // 🔹 Delete mock data by Id or Vertical
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteMockDataById(@PathVariable("id")String dataId){
         Optional<MockDataModel> data = mockDataRepository.findById(dataId.trim());
-
+        List<MockDataModel> mockList = mockDataRepository.findByVertical(dataId.trim().toUpperCase());
         if(data.isPresent()){
             mockDataRepository.delete(data.get());
             return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.OK.value(),"Mock data deleted successfully for Id : "+dataId), HttpStatusCode.valueOf(HttpStatus.OK.value()));
 
         }
+        else if(mockList.size()>0){
+            mockDataRepository.deleteAll(mockList);
+            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.OK.value(),"All Mock data deleted successfully for Vertical : "+dataId), HttpStatusCode.valueOf(HttpStatus.OK.value()));
+        }
         else {
-            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.NOT_FOUND.value(),"Mock data not found for Id : "+dataId), HttpStatusCode.valueOf(HttpStatus.NOT_FOUND.value()));
+            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.NOT_FOUND.value(),"Mock data not found for : "+dataId), HttpStatusCode.valueOf(HttpStatus.NOT_FOUND.value()));
+        }
+    }
+
+    // 🔹 Delete All mock data
+    @DeleteMapping("/delete/all")
+    public ResponseEntity<?> deleteAllMockData(){
+        try{
+            mockDataRepository.deleteAll();
+            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.OK.value(),"All Mock data deleted successfully"), HttpStatusCode.valueOf(HttpStatus.OK.value()));
+
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.INTERNAL_SERVER_ERROR.value(),"Exception occured while deleting all Mock Data "+e.getMessage()), HttpStatusCode.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()));
+
         }
     }
 
@@ -171,20 +195,35 @@ public class MockAdminController
 
     }
 
-        @DeleteMapping("/vertical/delete/{id}")
-        public ResponseEntity<?> deleteMockVerticalDataById(@PathVariable("id")String dataId){
+    // 🔹 Delete Vertical data by Id or Name
+    @DeleteMapping("/vertical/delete/{id}")
+    public ResponseEntity<?> deleteMockVerticalDataById(@PathVariable("id")String dataId){
         Optional<MockDataVertical> data = mVerticalRepository.findById(dataId.trim());
+        Optional<MockDataVertical> dataName = mVerticalRepository.findByVerticalName(dataId.trim());
+
+
 
         if(data.isPresent()){
             mVerticalRepository.delete(data.get());
             return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.OK.value(),"Vertical data deleted successfully for Id : "+dataId), HttpStatusCode.valueOf(HttpStatus.OK.value()));
 
         }
+        else if(dataName.isPresent()){
+            mVerticalRepository.delete(data.get());
+            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.OK.value(),"Vertical data deleted successfully for Name : "+dataId), HttpStatusCode.valueOf(HttpStatus.OK.value()));
+        }
         else {
-            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.NOT_FOUND.value(),"Vertical data not found for Id : "+dataId), HttpStatusCode.valueOf(HttpStatus.NOT_FOUND.value()));
+            return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.NOT_FOUND.value(),"Vertical data not found for : "+dataId), HttpStatusCode.valueOf(HttpStatus.NOT_FOUND.value()));
         }
     }
 
+    @GetMapping("/jwt")
+    public ResponseEntity<?> getJetToken(){
+        String token = JWTUtils.generateToken(JsonConfig.config.getMockObject().get("qa_mock_service").toString());
+        boolean valid = JWTUtils.validateToken(token, JsonConfig.config.getMockObject().get("qa_mock_service").toString());
+        return new ResponseEntity<>(Map.of("mock_secret",JsonConfig.config.getMockObject().get("qa_mock_service").toString()), HttpStatusCode.valueOf(HttpStatus.OK.value()));
+
+    }
 
     // 🔸 Reusable mapper
     private MockDataModel toModel(MockDataModel req) {
