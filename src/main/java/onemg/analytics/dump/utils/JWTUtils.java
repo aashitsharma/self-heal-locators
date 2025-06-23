@@ -3,10 +3,15 @@ package onemg.analytics.dump.utils;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import onemg.analytics.dump.controller.mockcontroller.MockAdminController;
+
 import java.security.Key;
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 public class JWTUtils {
+        private static final Logger LOGGER = Logger.getLogger(JWTUtils.class);
 
     private static final long EXPIRATION_TIME_MS = 30 * 1000L; // 30 seconds
 
@@ -33,7 +38,7 @@ public class JWTUtils {
                     .setSigningKey(getSigningKey(base64Secret))
                     .build()
                     .parseClaimsJws(token).getBody();
-            if(claim.getExpiration().after(now)){
+            if(claim.getExpiration().before(now)){
                 return false;
             }
             return true;
