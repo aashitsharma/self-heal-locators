@@ -31,7 +31,7 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
             MDC.put("reference", "REF-ID-"+uniqueReference);
             response.addHeader("request_id",uniqueReference);
 
-            if(request.getRequestURI().contains("/admin/mock-data") && !request.getRequestURI().equalsIgnoreCase("/admin/mock-data/jwt")){
+            if(request.getRequestURI().contains("/admin/mock-data") && !request.getRequestURI().equalsIgnoreCase("/admin/mock-data/jwt") && Boolean.parseBoolean(JsonConfig.config.getMockObject().get("jwt_enabled").toString())){
                  String header = request.getHeader("Authorization");
                 if (header == null || !header.startsWith("Bearer ")) {
                     response.sendError(HttpStatus.FORBIDDEN.value(), "Missing or invalid Authorization header");
