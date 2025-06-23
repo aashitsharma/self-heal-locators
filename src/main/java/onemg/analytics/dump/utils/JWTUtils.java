@@ -28,10 +28,14 @@ public class JWTUtils {
 
     public static boolean validateToken(String token, String base64Secret) {
         try {
-            Jwts.parserBuilder()
+            Date now = new Date();
+            Claims claim = Jwts.parserBuilder()
                     .setSigningKey(getSigningKey(base64Secret))
                     .build()
-                    .parseClaimsJws(token);
+                    .parseClaimsJws(token).getBody();
+            if(claim.getExpiration().after(now)){
+                return false;
+            }
             return true;
         } catch (JwtException e) {
             return false;
