@@ -3,7 +3,6 @@ package onemg.analytics.dump.utils;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import onemg.analytics.dump.controller.mockcontroller.MockAdminController;
 
 import java.security.Key;
 import java.util.Date;
@@ -33,13 +32,12 @@ public class JWTUtils {
 
     public static boolean validateToken(String token, String base64Secret) {
         try {
-            Date now = new Date();
             Claims claim = Jwts.parserBuilder()
                     .setSigningKey(getSigningKey(base64Secret))
                     .build()
                     .parseClaimsJws(token).getBody();
             long timeDelta = claim.getExpiration().getTime() - claim.getIssuedAt().getTime();
-            if(timeDelta>30000){
+            if(timeDelta>EXPIRATION_TIME_MS){
                 return false;
             }
             return true;
