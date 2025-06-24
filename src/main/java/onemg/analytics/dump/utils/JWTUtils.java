@@ -38,7 +38,8 @@ public class JWTUtils {
                     .setSigningKey(getSigningKey(base64Secret))
                     .build()
                     .parseClaimsJws(token).getBody();
-            if(claim.getExpiration().before(now)){
+            long timeDelta = claim.getExpiration().getTime() - claim.getIssuedAt().getTime();
+            if(timeDelta>30000){
                 return false;
             }
             return true;
