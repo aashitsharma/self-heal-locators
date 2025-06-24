@@ -38,7 +38,25 @@ public class VaultConfigController {
     @GetMapping("vault/{project}/{env}")
     public ResponseEntity<Object> getConfig(@PathVariable("project") String project,@PathVariable("env") String env) {
 
-        String downstreamUrl = JsonConfig.config.getVaultHost()+"/v1/quality-engineering/data/"+project+"/"+env+"/config";
+       return internalVault(project, env,"config");
+
+    }
+
+     /***
+     * This API is responsible to fetch vault config for given project and environment from 1mg vault server
+     * @param project : for which vault config needs to be retrieved
+     * @param env : environment for which vault config is required
+     * @return JSON of Vault config data
+     */
+    @GetMapping("vault/{project}/{env}/{runEnv}")
+    public ResponseEntity<Object> getConfig(@PathVariable("project") String project,@PathVariable("env") String env,@PathVariable("runEnv")String runEnv) {
+
+       return internalVault(project, env,runEnv);
+
+    }
+
+    private ResponseEntity<Object>internalVault(@PathVariable("project") String project,@PathVariable("env") String env,@PathVariable("runEnv")String runEnv){
+         String downstreamUrl = JsonConfig.config.getVaultHost()+"/v1/quality-engineering/data/"+project+"/"+env+"/"+runEnv;
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Vault-Token", JsonConfig.config.getVaultToken());
         HttpEntity<String> entity = new HttpEntity<>(headers);
@@ -78,7 +96,6 @@ public class VaultConfigController {
             LOGGER.info("Exception Occurred : "+e.getMessage() + " | Status Code : 500 | API : "+downstreamUrl);
             return new ResponseEntity<>(new ErrorModel().errorResp(HttpStatus.INTERNAL_SERVER_ERROR.value(),e.getMessage()), responseHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 
 }
