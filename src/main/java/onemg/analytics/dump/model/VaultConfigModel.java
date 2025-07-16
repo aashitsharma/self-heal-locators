@@ -65,6 +65,9 @@ public class VaultConfigModel {
         @JsonProperty("reportportal")
         private Object reportportal;
 
+        @JsonProperty("common")
+        private Object common;
+
     }
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
