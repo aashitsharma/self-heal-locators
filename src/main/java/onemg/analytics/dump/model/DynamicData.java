@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Map;
 
 @Document(collection = "analytics_event_dump")
-public class DynamicData {
+public class DynamicData extends BaseModel{
 
     @Id
     private String id;

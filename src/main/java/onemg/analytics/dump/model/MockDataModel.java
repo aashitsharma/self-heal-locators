@@ -14,7 +14,7 @@ import java.util.Map;
         @CompoundIndex(name = "unique_uri_vertical_method", def = "{'uri' : 1, 'vertical': 1, 'method': 1}", unique = true)
 })
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class MockDataModel {
+public class MockDataModel extends BaseModel {
     @Id
     private String id;
     private String uri;

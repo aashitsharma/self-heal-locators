@@ -5,7 +5,7 @@ import lombok.Data;
 import org.apache.log4j.MDC;
 
 @Data
-public class ErrorModel {
+public class ErrorModel extends BaseModel{
     @JsonProperty("Status Code")
     private int statusCode;
     @JsonProperty("Status Message")

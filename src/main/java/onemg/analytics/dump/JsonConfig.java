@@ -50,6 +50,8 @@ public class JsonConfig {
         System.setProperty("server.port","8980");
         System.setProperty("management.endpoints.web.exposure.include","*");
         System.setProperty("management.endpoint.health.show-details","always");
+        System.setProperty("spring.servlet.multipart.max-file-size", "10MB");
+        System.setProperty("spring.servlet.multipart.max-request-size", "10MB");
 
         props.put("spring.data.mongodb.uri",config.getSpringDataMongodbUri());
         /*props.put("logging.level.root",config.getLoggingLevel());
@@ -61,6 +63,8 @@ public class JsonConfig {
         props.put("server.port","8980");
         props.put("management.endpoints.web.exposure.include","*");
         props.put("management.endpoint.health.show-details","always");
+        props.put("spring.servlet.multipart.max-file-size", "10MB");
+        props.put("spring.servlet.multipart.max-request-size", "10MB");
     }
 
     @Bean

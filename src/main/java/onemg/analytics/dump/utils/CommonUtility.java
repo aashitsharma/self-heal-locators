@@ -3,7 +3,10 @@ package onemg.analytics.dump.utils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
+import onemg.analytics.dump.model.BaseModel;
+
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.InputStream;
 import java.util.Enumeration;
@@ -13,6 +16,9 @@ import java.util.Map;
 public class CommonUtility {
 
     private static final Logger LOGGER = Logger.getLogger(CommonUtility.class);
+
+    @Autowired
+    private static ObjectMapper objectMapper;
 
     /**
      * Method is responsible for parsing json from file path provided and return Map
@@ -49,6 +55,12 @@ public class CommonUtility {
         }
         sb.append(" }");
         return sb.toString();
+    }
+    @SuppressWarnings("unchecked")
+    public static Map<String, Object> convertDtoToMap(BaseModel dto) {
+        objectMapper = new ObjectMapper();
+        return objectMapper.convertValue(dto, Map.class);
+
     }
 
 }

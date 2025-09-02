@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class VaultConfigModel {
+public class VaultConfigModel extends BaseModel{
     @JsonProperty("request_id")
     private String requestId;
 
