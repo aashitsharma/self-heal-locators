@@ -222,17 +222,23 @@
       transform: translateY(-2px);
     }
 
-    /* ✅ Fix JSON data output box */
+    /* Scrollable JSON container */
     #jsonOutput {
       background: rgba(0, 0, 0, 0.6);
-      padding: 12px;
+      border: 1px solid rgba(255,255,255,0.3);
       border-radius: 8px;
+      padding: 12px;
+      margin-top: 15px;
+      max-height: 250px;   /* fixed height */
+      overflow-y: auto;    /* vertical scroll */
+      overflow-x: auto;    /* horizontal scroll */
+    }
+
+    #jsonPre {
+      margin: 0;
       color: #00eaff;
       font-size: 14px;
-      max-height: 200px;       /* fixed height */
-      overflow-y: auto;        /* vertical scroll */
-      overflow-x: auto;        /* horizontal scroll */
-      white-space: pre;        /* keep formatting */
+      white-space: pre;    /* keep indentation */
       font-family: monospace;
     }
 
@@ -322,7 +328,7 @@
     <div class="divider"></div>
 
     <div class="result" id="result">
-      <div id="jsonOutput"></div>
+      <div id="jsonOutput"><pre id="jsonPre"></pre></div>
       <div id="resultTableWrapper">
         <table id="resultTable" style="display: none;">
           <thead>
