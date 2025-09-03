@@ -23,7 +23,7 @@ RUN apt-get update && \
 
 
 # Setup JAVA_HOME -- useful for docker commandline
-ENV JAVA_HOME /usr/lib/jvm/java-1.19.0-openjdk-amd64/
+ENV JAVA_HOME=/usr/lib/jvm/java-1.19.0-openjdk-amd64/
 RUN export JAVA_HOME
 
 # Set environment variables for Maven
