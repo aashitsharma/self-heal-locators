@@ -241,6 +241,25 @@
       white-space: pre;    /* keep indentation */
       font-family: monospace;
     }
+    /* Scrollable JSON inside table Response column */
+    .response-box {
+      max-height: 200px;       /* fixed height */
+      overflow-y: auto;        /* vertical scroll */
+      overflow-x: auto;        /* horizontal scroll */
+      background: rgba(0,0,0,0.6);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 6px;
+      padding: 8px;
+      text-align: left;
+    }
+
+    .response-box pre {
+      margin: 0;
+      color: #00eaff;
+      font-size: 13px;
+      white-space: pre;        /* keep indentation */
+      font-family: monospace;
+    }
 
     /* Toast */
     .toast {
@@ -644,7 +663,9 @@ function showTablePage() {
       <td>${entry.method}</td>
       <td>${entry.responseCode}</td>
       <td>
-        <pre id="${responseId}">${JSON.stringify(entry.response, null, 2)}</pre>
+        <div class="response-box">
+          <pre id="${responseId}">${JSON.stringify(entry.response, null, 2)}</pre>
+        </div>
         <button onclick="copyToClipboard('${responseId}')">Copy</button>
       </td>
     `;
@@ -687,7 +708,11 @@ function prevPage() {
           <td>${entry.vertical}</td>
           <td>${entry.method}</td>
           <td>${entry.responseCode}</td>
-          <td><pre><code class="json">${JSON.stringify(entry.response, null, 2)}</code></pre></td>
+          <td>
+            <div class="response-box">
+              <pre>${JSON.stringify(entry.response, null, 2)}</pre>
+            </div>
+          </td>
         `;
         tbody.appendChild(tr);
       });
