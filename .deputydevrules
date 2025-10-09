@@ -1,0 +1,8 @@
+Codebase of this project is JAVA.
+Springboot is used for creating a Web Server for REST APIs.
+This services serves multiple Use cases like :
+    - Mock Service
+    - Locator Self Heal Service
+    - Vault Integration
+Expected output should be in JAVA code only and not any other programming language.
+Mogo DB is used to store all the required details.
