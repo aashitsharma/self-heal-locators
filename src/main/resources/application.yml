@@ -1,0 +1,35 @@
+# RAG Configuration - Simplified 5-Chunk Approach
+rag:
+  enabled: true
+  max-context-length: 8000  # Increased since we return only 1 chunk now
+  performance-tracking-enabled: true
+  detailed-logging-enabled: true
+  debug-mode: false
+  
+  # Legacy parameters (kept for backward compatibility but not used in 5-chunk approach)
+  chunk-size: 500
+  overlap-size: 50
+  relevance-threshold: 0.1
+  max-chunks-to-analyze: 5
+  id-match-weight: 3.0
+  resource-id-match-weight: 2.5
+  class-match-weight: 1.5
+  text-match-weight: 2.0
+  tag-match-weight: 1.0
+  other-attribute-match-weight: 1.0
+
+# Spring Boot Configuration  
+spring:
+  data:
+    mongodb:
+      # Configure as per your MongoDB setup
+      host: localhost
+      port: 27017
+      database: analytics_dump
+
+# Logging Configuration
+logging:
+  level:
+    onemg.analytics.dump.service.RagService: DEBUG
+    onemg.analytics.dump.service.ContextAnalyzerService: DEBUG
+    onemg.analytics.dump.controller.OpenAI: INFO
