@@ -1,0 +1,25 @@
+package self.heal.locators.model;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
+import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.Map;
+
+@Data
+@Document("mocked_data")
+@CompoundIndexes({
+        @CompoundIndex(name = "unique_uri_vertical_method", def = "{'uri' : 1, 'vertical': 1, 'method': 1}", unique = true)
+})
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class MockDataModel extends BaseModel {
+    @Id
+    private String id;
+    private String uri;
+    private Map<String, Object> response;
+    private String vertical;
+    private int responseCode;
+    private String method;
+}

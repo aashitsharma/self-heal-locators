@@ -30,6 +30,6 @@ spring:
 # Logging Configuration
 logging:
   level:
-    onemg.analytics.dump.service.RagService: DEBUG
-    onemg.analytics.dump.service.ContextAnalyzerService: DEBUG
-    onemg.analytics.dump.controller.OpenAI: INFO
+    self.heal.locators.service.RagService: DEBUG
+    self.heal.locators.service.ContextAnalyzerService: DEBUG
+    self.heal.locators.controller.OpenAI: INFO
