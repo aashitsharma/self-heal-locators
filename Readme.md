@@ -99,7 +99,7 @@ When UI automation tests fail due to broken locators (XPath, CSS selectors, reso
 
 ## Key Components
 
-### 1. **RagService** (`onemg.analytics.dump.service.RagService`)
+### 1. **RagService** (`self.heal.locators.service.RagService`)
 **Purpose**: Optimizes context sent to LLMs by extracting only relevant portions of page source
 
 **Key Features**:
@@ -120,7 +120,7 @@ When UI automation tests fail due to broken locators (XPath, CSS selectors, reso
 - Mobile-specific content: +1.0 bonus
 ```
 
-### 2. **ContextAnalyzerService** (`onemg.analytics.dump.service.ContextAnalyzerService`)
+### 2. **ContextAnalyzerService** (`self.heal.locators.service.ContextAnalyzerService`)
 **Purpose**: Analyzes page structure and detects automation type
 
 **Capabilities**:
@@ -136,7 +136,7 @@ When UI automation tests fail due to broken locators (XPath, CSS selectors, reso
 - Web: Contains HTML tags like "div", "button", "input"
 ```
 
-### 3. **LocatorMatcher** (`onemg.analytics.dump.service.LocatorMatcher`)
+### 3. **LocatorMatcher** (`self.heal.locators.service.LocatorMatcher`)
 **Purpose**: Validates locators and provides local healing without AI
 
 **Methods**:
@@ -144,7 +144,7 @@ When UI automation tests fail due to broken locators (XPath, CSS selectors, reso
 - `ensureXPath()`: Converts any locator to valid XPath
 - `healLocator()`: Attempts local healing using heuristics
 
-### 4. **ImageService** (`onemg.analytics.dump.utils.ImageService`)
+### 4. **ImageService** (`self.heal.locators.utils.ImageService`)
 **Purpose**: Handles screenshot storage in GridFS
 
 **Features**:
